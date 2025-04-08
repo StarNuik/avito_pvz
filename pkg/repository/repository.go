@@ -8,6 +8,7 @@ import (
 	"github.com/starnuik/avito_pvz/pkg/entity"
 )
 
+// TODO doc
 type Repository interface {
 	// C
 	CreateProduct(ctx context.Context, product entity.Product) (entity.Product, error)
@@ -47,19 +48,24 @@ func New(ctx context.Context, connString string) (*pgImpl, error) {
 
 // TODO
 // func (repo *Repository) GetInfo()
+
+// TODO
 // helpers
-func (repo *pgImpl) LockPvz(ctx context.Context, id uuid.UUID) error {
-	panic("")
-}
 
-func (repo *pgImpl) LockReception(ctx context.Context, id uuid.UUID) error {
-	panic("")
-}
+// // required by UpdateReceptionStatus
+// func (repo *pgImpl) LockPvz(ctx context.Context, id uuid.UUID) error {
+// 	panic("")
+// }
 
-func (repo *pgImpl) LastReception(ctx context.Context) (entity.Reception, error) {
-	panic("")
-}
+// // required by DeleteLastProduct
+// func (repo *pgImpl) LockReception(ctx context.Context, id uuid.UUID) error {
+// 	panic("")
+// }
 
-func (repo *pgImpl) LastProduct(ctx context.Context, receptionId uuid.UUID) (entity.Product, error) {
-	panic("")
-}
+// func (repo *pgImpl) LastReception(ctx context.Context) (entity.Reception, error) {
+// 	panic("")
+// }
+
+// func (repo *pgImpl) LastProduct(ctx context.Context, receptionId uuid.UUID) (entity.Product, error) {
+// 	panic("")
+// }
