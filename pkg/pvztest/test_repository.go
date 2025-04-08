@@ -86,3 +86,15 @@ func (repo *TestRepository) CreateReception(t *testing.T, reception entity.Recep
 		t.Fatal(err)
 	}
 }
+
+func (repo *TestRepository) CreateProduct(t *testing.T, product entity.Product) {
+	ctx := context.Background()
+	_, err := repo.conn.Exec(ctx, `
+		insert into products (id, dateTime, receptionId, type)
+		values ($1, $2, $3, $4)
+	`, product.Id, product.DateTime, product.ReceptionId, product.Type)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+}

@@ -25,11 +25,6 @@ func NewRepository(ctx context.Context, connString string) (*Repository, error) 
 
 // TODO
 // func (repo *Repository) GetInfo()
-
-func (repo *Repository) DeleteProduct(ctx context.Context, id uuid.UUID) error {
-	panic("")
-}
-
 // helpers
 func (repo *Repository) LockPvz(ctx context.Context, id uuid.UUID) error {
 	panic("")
@@ -43,6 +38,6 @@ func (repo *Repository) LastReception(ctx context.Context) (entity.Reception, er
 	panic("")
 }
 
-func (repo *Repository) LastProduct(ctx context.Context) (entity.Product, error) {
+func (repo *Repository) LastProduct(ctx context.Context, receptionId uuid.UUID) (entity.Product, error) {
 	panic("")
 }
