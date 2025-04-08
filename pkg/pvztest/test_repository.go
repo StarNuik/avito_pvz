@@ -74,3 +74,15 @@ func (repo *TestRepository) CreatePvz(t *testing.T, pvz entity.Pvz) {
 		t.Fatal(err)
 	}
 }
+
+func (repo *TestRepository) CreateReception(t *testing.T, reception entity.Reception) {
+	ctx := context.Background()
+	_, err := repo.conn.Exec(ctx, `
+		insert into receptions (id, pvzId, dateTime, status)
+		values ($1, $2, $3, $4)
+	`, reception.Id, reception.PvzId, reception.DateTime, reception.Status)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+}

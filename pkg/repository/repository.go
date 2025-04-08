@@ -26,10 +26,6 @@ func NewRepository(ctx context.Context, connString string) (*Repository, error) 
 // TODO
 // func (repo *Repository) GetInfo()
 
-func (repo *Repository) CloseReception(ctx context.Context, id uuid.UUID) error {
-	panic("")
-}
-
 func (repo *Repository) DeleteProduct(ctx context.Context, id uuid.UUID) error {
 	panic("")
 }
