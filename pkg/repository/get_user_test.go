@@ -4,7 +4,6 @@ import (
 	"context"
 	"testing"
 
-	"github.com/google/uuid"
 	"github.com/starnuik/avito_pvz/pkg/entity"
 	"github.com/starnuik/avito_pvz/pkg/pvztest"
 	"github.com/stretchr/testify/require"
@@ -17,11 +16,8 @@ func Test_GetUser(t *testing.T) {
 	testRepo := pvztest.NewTestRepository(t)
 	testRepo.Clear(t)
 
-	userId, err := uuid.NewRandom()
-	require.Nil(err)
-
 	user := entity.User{
-		Id:           userId,
+		Id:           pvztest.NewUuid(t),
 		Email:        "test@email.com",
 		PasswordHash: []byte("weak password"),
 		Role:         entity.UserRole(0),

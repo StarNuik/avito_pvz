@@ -6,8 +6,10 @@ import (
 	"github.com/google/uuid"
 )
 
+type PvzCity int
+
 type Pvz struct {
 	Id               uuid.UUID
 	RegistrationDate time.Time
-	City             string
+	City             PvzCity
 }

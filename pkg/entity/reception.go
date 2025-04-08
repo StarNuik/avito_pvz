@@ -6,9 +6,11 @@ import (
 	"github.com/google/uuid"
 )
 
+type ReceptionStatus int
+
 type Reception struct {
 	Id       uuid.UUID
 	PvzId    uuid.UUID
 	DateTime time.Time
-	Status   string
+	Status   ReceptionStatus
 }

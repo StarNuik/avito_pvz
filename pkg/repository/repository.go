@@ -23,10 +23,6 @@ func NewRepository(ctx context.Context, connString string) (*Repository, error) 
 	}, nil
 }
 
-func (repo *Repository) CreatePvz(ctx context.Context, pvz entity.Pvz) (entity.Pvz, error) {
-	panic("")
-}
-
 // TODO
 // func (repo *Repository) GetInfo()
 

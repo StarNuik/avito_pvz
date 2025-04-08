@@ -17,15 +17,14 @@ func Test_CreateUser(t *testing.T) {
 	testRepo := pvztest.NewTestRepository(t)
 	testRepo.Clear(t)
 
-	repo := pvztest.NewRepository(t)
-
-	ctx := context.Background()
-
 	user := entity.User{
+		Id:           uuid.Nil,
 		Email:        "test@email.com",
 		PasswordHash: []byte("weak password"),
 		Role:         entity.UserRole(0),
 	}
+	repo := pvztest.NewRepository(t)
+	ctx := context.Background()
 
 	// Act
 	result, err := repo.CreateUser(ctx, user)
