@@ -33,11 +33,6 @@ func (repo *Repository) CloseReception(ctx context.Context, id uuid.UUID) error 
 func (repo *Repository) DeleteProduct(ctx context.Context, id uuid.UUID) error {
 	panic("")
 }
-
-func (repo *Repository) CreateReception(ctx context.Context, reception entity.Reception) (entity.Reception, error) {
-	panic("")
-}
-
 func (repo *Repository) CreateProduct(ctx context.Context, product entity.Product) (entity.Product, error) {
 	panic("")
 }

@@ -34,10 +34,5 @@ func Test_CreatePvz(t *testing.T) {
 	require.NotEqual(uuid.Nil, result.Id)
 
 	require.Equal(pvz.City, result.City)
-
-	// postgres timestamp accuracy is limited to micro-seconds
-	microsec := pvz.RegistrationDate.UnixNano() / 1000
-	date := time.UnixMicro(microsec).UTC()
-	require.Equal(date, result.RegistrationDate)
-
+	pvztest.RequireEqualTime(t, pvz.RegistrationDate, result.RegistrationDate)
 }

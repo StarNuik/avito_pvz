@@ -11,7 +11,7 @@ func (repo *Repository) CreateUser(ctx context.Context, user entity.User) (entit
 		insert into users (email, role, passwordHash)
 		values ($1, $2, $3)
 		returning id
-	`, user.Email, int(user.Role), user.PasswordHash)
+	`, user.Email, user.Role, user.PasswordHash)
 
 	err := row.Scan(&user.Id)
 	return user, err

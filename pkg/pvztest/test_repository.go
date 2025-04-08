@@ -62,3 +62,15 @@ func (repo *TestRepository) CreateUser(t *testing.T, user entity.User) {
 		t.Fatal(err)
 	}
 }
+
+func (repo *TestRepository) CreatePvz(t *testing.T, pvz entity.Pvz) {
+	ctx := context.Background()
+	_, err := repo.conn.Exec(ctx, `
+		insert into pvzs (id, registrationDate, city)
+		values ($1, $2, $3)
+	`, pvz.Id, pvz.RegistrationDate, pvz.City)
+
+	if err != nil {
+		t.Fatal(err)
+	}
+}
