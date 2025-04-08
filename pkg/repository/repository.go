@@ -29,9 +29,6 @@ func NewRepository(ctx context.Context, connString string) (*Repository, error) 
 func (repo *Repository) DeleteProduct(ctx context.Context, id uuid.UUID) error {
 	panic("")
 }
-func (repo *Repository) CreateProduct(ctx context.Context, product entity.Product) (entity.Product, error) {
-	panic("")
-}
 
 // helpers
 func (repo *Repository) LockPvz(ctx context.Context, id uuid.UUID) error {
