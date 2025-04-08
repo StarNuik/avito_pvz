@@ -1,4 +1,4 @@
-package repo
+package repository
 
 import (
 	"context"
@@ -21,10 +21,6 @@ func NewRepository(ctx context.Context, connString string) (*Repository, error) 
 	return &Repository{
 		conn: conn,
 	}, nil
-}
-
-func (repo *Repository) CreateUser(ctx context.Context, user entity.User) (entity.User, error) {
-	panic("")
 }
 
 func (repo *Repository) GetUser(ctx context.Context, email string) (entity.User, error) {

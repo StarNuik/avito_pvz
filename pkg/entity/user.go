@@ -2,11 +2,16 @@ package entity
 
 import "github.com/google/uuid"
 
-type UserRole string
+type UserRole int
+
+const (
+	RoleModerator UserRole = iota
+	RoleClient
+)
 
 type User struct {
 	Id           uuid.UUID
 	Email        string
-	Role         string
+	Role         UserRole
 	PasswordHash []byte
 }
