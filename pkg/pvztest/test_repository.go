@@ -4,7 +4,6 @@ import (
 	"context"
 	"testing"
 
-	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/starnuik/avito_pvz/pkg/entity"
 )
@@ -26,19 +25,40 @@ func NewTestRepository(t *testing.T) *TestRepository {
 	}
 }
 
-func (repo *TestRepository) GetUser(t *testing.T, id uuid.UUID) entity.User {
-	ctx := context.Background()
-	row := repo.conn.QueryRow(ctx, `
-		select id, email, role, passwordHash
-		from users
-		where id = $1
-	`, id)
+// func (repo *TestRepository) GetUser(t *testing.T, id uuid.UUID) entity.User {
+// 	ctx := context.Background()
+// 	row := repo.conn.QueryRow(ctx, `
+// 		select id, email, role, passwordHash
+// 		from users
+// 		where id = $1
+// 	`, id)
 
-	user := entity.User{}
-	err := row.Scan(&user.Id, &user.Email, &user.Role, &user.PasswordHash)
+// 	user := entity.User{}
+// 	err := row.Scan(&user.Id, &user.Email, &user.Role, &user.PasswordHash)
+// 	if err != nil {
+// 		t.Fatal(err)
+// 	}
+
+// 	return user
+// }
+
+func (repo *TestRepository) Clear(t *testing.T) {
+	ctx := context.Background()
+	_, err := repo.conn.Exec(ctx, `
+		truncate table users, pvzs, receptions, products;
+	`)
 	if err != nil {
 		t.Fatal(err)
 	}
+}
 
-	return user
+func (repo *TestRepository) CreateUser(t *testing.T, user entity.User) {
+	ctx := context.Background()
+	_, err := repo.conn.Exec(ctx, `
+		insert into users (id, email, role, passwordHash)
+		values ($1, $2, $3, $4)
+	`, user.Id, user.Email, user.Role, user.PasswordHash)
+	if err != nil {
+		t.Fatal(err)
+	}
 }

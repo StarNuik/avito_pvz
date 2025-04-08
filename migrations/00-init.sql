@@ -4,12 +4,14 @@ create table users (
 	role int not null,
 	passwordHash bytea not null
 );
+create index idxUsersEmail on users(email);
 
 create table pvzs (
 	id uuid primary key default gen_random_uuid(),
 	registrationDate timestamp not null default now(),
 	city int not null
 );
+--- TODO idx date?
 
 create table receptions (
 	id uuid primary key default gen_random_uuid(),
@@ -17,6 +19,8 @@ create table receptions (
 	dateTime timestamp not null default now(),
 	status int not null
 );
+--- todo idx date?
+--- todo idx pvzId?
 
 create table products (
 	id uuid primary key default gen_random_uuid(),
@@ -24,3 +28,5 @@ create table products (
 	receptionId uuid references receptions(id) on delete cascade,
 	type int not null
 );
+--- todo idx receptionId?
+--- todo idx date?

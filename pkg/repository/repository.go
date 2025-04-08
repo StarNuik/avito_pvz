@@ -23,10 +23,6 @@ func NewRepository(ctx context.Context, connString string) (*Repository, error) 
 	}, nil
 }
 
-func (repo *Repository) GetUser(ctx context.Context, email string) (entity.User, error) {
-	panic("")
-}
-
 func (repo *Repository) CreatePvz(ctx context.Context, pvz entity.Pvz) (entity.Pvz, error) {
 	panic("")
 }

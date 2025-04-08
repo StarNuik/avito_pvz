@@ -10,31 +10,31 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func Test_CreateUser(t *testing.T) {
+func Test_GetUser(t *testing.T) {
 	// Arrange
 	require := require.New(t)
 
 	testRepo := pvztest.NewTestRepository(t)
 	testRepo.Clear(t)
 
-	repo := pvztest.NewRepository(t)
-
-	ctx := context.Background()
+	userId, err := uuid.NewRandom()
+	require.Nil(err)
 
 	user := entity.User{
+		Id:           userId,
 		Email:        "test@email.com",
 		PasswordHash: []byte("weak password"),
 		Role:         entity.UserRole(0),
 	}
+	testRepo.CreateUser(t, user)
+
+	repo := pvztest.NewRepository(t)
+	ctx := context.Background()
 
 	// Act
-	result, err := repo.CreateUser(ctx, user)
+	result, err := repo.GetUser(ctx, user.Email)
 
 	// Assert
 	require.Nil(err)
-	require.NotEqual(uuid.Nil, result.Id)
-
-	require.Equal(user.Email, result.Email)
-	require.Equal(user.Role, result.Role)
-	require.Equal(user.PasswordHash, result.PasswordHash)
+	require.Equal(user, result)
 }
