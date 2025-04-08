@@ -6,7 +6,7 @@ import (
 	"github.com/starnuik/avito_pvz/pkg/entity"
 )
 
-func (repo *Repository) CreatePvz(ctx context.Context, pvz entity.Pvz) (entity.Pvz, error) {
+func (repo *pgImpl) CreatePvz(ctx context.Context, pvz entity.Pvz) (entity.Pvz, error) {
 	row := repo.conn.QueryRow(ctx, `
 		insert into pvzs (registrationDate, city)
 		values ($1, $2)

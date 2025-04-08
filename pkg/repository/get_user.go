@@ -6,7 +6,7 @@ import (
 	"github.com/starnuik/avito_pvz/pkg/entity"
 )
 
-func (repo *Repository) GetUser(ctx context.Context, email string) (entity.User, error) {
+func (repo *pgImpl) GetUser(ctx context.Context, email string) (entity.User, error) {
 	row := repo.conn.QueryRow(ctx, `
 		select id, email, role, passwordHash
 		from users

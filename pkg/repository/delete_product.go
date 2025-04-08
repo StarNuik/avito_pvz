@@ -7,7 +7,7 @@ import (
 	"github.com/jackc/pgx/v5"
 )
 
-func (repo *Repository) DeleteProduct(ctx context.Context, id uuid.UUID) error {
+func (repo *pgImpl) DeleteProduct(ctx context.Context, id uuid.UUID) error {
 	tag, err := repo.conn.Exec(ctx, `
 		delete from products
 		where id = $1

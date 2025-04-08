@@ -9,9 +9,9 @@ import (
 
 const connString = "postgres://postgres:postgres@localhost:5432/pvz"
 
-func NewRepository(t *testing.T) *repository.Repository {
+func NewRepository(t *testing.T) repository.Repository {
 	ctx := context.Background()
-	repo, err := repository.NewRepository(ctx, connString)
+	repo, err := repository.New(ctx, connString)
 	if err != nil {
 		t.Fatal(err)
 	}

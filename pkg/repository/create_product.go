@@ -6,7 +6,7 @@ import (
 	"github.com/starnuik/avito_pvz/pkg/entity"
 )
 
-func (repo *Repository) CreateProduct(ctx context.Context, product entity.Product) (entity.Product, error) {
+func (repo *pgImpl) CreateProduct(ctx context.Context, product entity.Product) (entity.Product, error) {
 	row := repo.conn.QueryRow(ctx, `
 		insert into products (receptionId, type)
 		values ($1, $2)

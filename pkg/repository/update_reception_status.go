@@ -7,7 +7,7 @@ import (
 	"github.com/starnuik/avito_pvz/pkg/entity"
 )
 
-func (repo *Repository) UpdateReceptionStatus(ctx context.Context, id uuid.UUID, status entity.ReceptionStatus) (entity.Reception, error) {
+func (repo *pgImpl) UpdateReceptionStatus(ctx context.Context, id uuid.UUID, status entity.ReceptionStatus) (entity.Reception, error) {
 	row := repo.conn.QueryRow(ctx, `
 		update receptions
 		set status = $1
