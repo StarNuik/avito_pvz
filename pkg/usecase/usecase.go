@@ -6,6 +6,7 @@ import (
 
 	"github.com/google/uuid"
 	"github.com/starnuik/avito_pvz/pkg/entity"
+	"github.com/starnuik/avito_pvz/pkg/password"
 	"github.com/starnuik/avito_pvz/pkg/repository"
 	"github.com/starnuik/avito_pvz/pkg/token"
 )
@@ -35,11 +36,13 @@ type Usecase interface {
 var _ Usecase = (*usecase)(nil)
 
 type usecase struct {
-	repo repository.Repository
+	repo   repository.Repository
+	hasher password.Hasher
 }
 
-func New(repo repository.Repository) *usecase {
+func New(repo repository.Repository, hasher password.Hasher) *usecase {
 	return &usecase{
-		repo: repo,
+		repo:   repo,
+		hasher: hasher,
 	}
 }

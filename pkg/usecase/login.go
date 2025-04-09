@@ -2,17 +2,28 @@ package usecase
 
 import (
 	"context"
+	"errors"
 
+	"github.com/starnuik/avito_pvz/pkg/entity"
 	"github.com/starnuik/avito_pvz/pkg/token"
 )
 
 func (u *usecase) Login(ctx context.Context, email string, password string) (token.Payload, error) {
-	out := token.Payload{}
 
-	_, err := u.repo.GetUser(ctx, email)
+	user, err := u.repo.GetUser(ctx, email)
+	if errors.Is(err, entity.ErrNotFound) {
+		return token.Payload{}, entity.ErrIncorrectLogin
+	}
 	if err != nil {
-		return out, err
+		return token.Payload{}, err
 	}
 
-	panic("")
+	passOk := u.hasher.Compare(password, user.PasswordHash)
+	if !passOk {
+		return token.Payload{}, entity.ErrIncorrectLogin
+	}
+
+	return token.Payload{
+		UserRole: user.Role,
+	}, nil
 }

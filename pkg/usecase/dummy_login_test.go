@@ -17,7 +17,7 @@ func Test_DummyLogin(t *testing.T) {
 		UserRole: entity.UserRole(128),
 	}
 
-	usecase := usecase.New(nil)
+	usecase := usecase.New(nil, nil)
 
 	// Act
 	result := usecase.DummyLogin(payload.UserRole)

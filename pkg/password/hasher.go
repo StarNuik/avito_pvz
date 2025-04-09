@@ -1,5 +1,7 @@
 package password
 
+//go:generate mockgen -destination=../mocks/mock_hasher.go -package=mocks github.com/starnuik/avito_pvz/pkg/password Hasher
+
 import "golang.org/x/crypto/bcrypt"
 
 // TODO doc
