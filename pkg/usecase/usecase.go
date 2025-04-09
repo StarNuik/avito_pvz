@@ -1,6 +1,7 @@
 package usecase
 
 import (
+	"context"
 	"time"
 
 	"github.com/google/uuid"
@@ -12,23 +13,23 @@ import (
 // TODO doc
 type Usecase interface {
 	// Auth
-	Login(email string, password string) (token.Payload, error)
-	Register(email string, password string, role entity.UserRole) (entity.User, error)
+	Login(ctx context.Context, email string, password string) (token.Payload, error)
+	Register(ctx context.Context, email string, password string, role entity.UserRole) (entity.User, error)
 	DummyLogin(userRole entity.UserRole) token.Payload
 
 	// Create
-	CreatePvz(token token.Payload, city entity.PvzCity, id *uuid.UUID, registrationDate *time.Time) (entity.Pvz, error)
-	CreateProduct(token token.Payload, pvzId uuid.UUID, productType entity.ProductType) (entity.Product, error)
-	CreateReception(token token.Payload, pvzId uuid.UUID) (entity.Reception, error)
+	CreatePvz(ctx context.Context, token token.Payload, city entity.PvzCity, id *uuid.UUID, registrationDate *time.Time) (entity.Pvz, error)
+	CreateProduct(ctx context.Context, token token.Payload, pvzId uuid.UUID, productType entity.ProductType) (entity.Product, error)
+	CreateReception(tctx context.Context, token token.Payload, pvzId uuid.UUID) (entity.Reception, error)
 
 	// Read
-	GetPvz(token token.Payload, startDate time.Time, endDate time.Time, page *int, limit *int) (entity.PvzInfo, error)
+	GetPvz(ctx context.Context, token token.Payload, startDate time.Time, endDate time.Time, page *int, limit *int) (entity.PvzInfo, error)
 
 	// Update
-	CloseLastReception(token token.Payload, pvzId uuid.UUID) (entity.Reception, error)
+	CloseLastReception(ctx context.Context, token token.Payload, pvzId uuid.UUID) (entity.Reception, error)
 
 	// Delete
-	DeleteLastProduct(token token.Payload, pvzId uuid.UUID) error
+	DeleteLastProduct(ctx context.Context, token token.Payload, pvzId uuid.UUID) error
 }
 
 var _ Usecase = (*usecase)(nil)

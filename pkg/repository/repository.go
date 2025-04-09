@@ -1,5 +1,7 @@
 package repository
 
+//go:generate mockgen -destination=../mocks/mock_repository.go -package=mocks github.com/starnuik/avito_pvz/pkg/repository Repository
+
 import (
 	"context"
 
@@ -10,19 +12,19 @@ import (
 
 // TODO doc
 type Repository interface {
-	// C
+	// Create
 	CreateProduct(ctx context.Context, product entity.Product) (entity.Product, error)
 	CreatePvz(ctx context.Context, pvz entity.Pvz) (entity.Pvz, error)
 	CreateReception(ctx context.Context, reception entity.Reception) (entity.Reception, error)
 	CreateUser(ctx context.Context, user entity.User) (entity.User, error)
 
-	// R
+	// Read
 	GetUser(ctx context.Context, email string) (entity.User, error)
 
-	// U
+	// Update
 	UpdateReceptionStatus(ctx context.Context, id uuid.UUID, status entity.ReceptionStatus) (entity.Reception, error)
 
-	// D
+	// Delete
 	DeleteProduct(ctx context.Context, id uuid.UUID) error
 }
 
