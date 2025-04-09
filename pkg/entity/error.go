@@ -8,3 +8,8 @@ var (
 	ErrIncorrectLogin = fmt.Errorf("incorrect email or password")
 	ErrAlreadyExists  = fmt.Errorf("resource already exists")
 )
+
+// TODO
+// func InternalError(err error) error {
+
+// }

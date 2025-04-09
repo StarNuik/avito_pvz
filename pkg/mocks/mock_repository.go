@@ -117,6 +117,21 @@ func (mr *MockRepositoryMockRecorder) DeleteProduct(ctx, id any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteProduct", reflect.TypeOf((*MockRepository)(nil).DeleteProduct), ctx, id)
 }
 
+// GetOpenReception mocks base method.
+func (m *MockRepository) GetOpenReception(ctx context.Context, pvzId uuid.UUID) (entity.Reception, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetOpenReception", ctx, pvzId)
+	ret0, _ := ret[0].(entity.Reception)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetOpenReception indicates an expected call of GetOpenReception.
+func (mr *MockRepositoryMockRecorder) GetOpenReception(ctx, pvzId any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetOpenReception", reflect.TypeOf((*MockRepository)(nil).GetOpenReception), ctx, pvzId)
+}
+
 // GetUser mocks base method.
 func (m *MockRepository) GetUser(ctx context.Context, email string) (entity.User, error) {
 	m.ctrl.T.Helper()
@@ -133,31 +148,33 @@ func (mr *MockRepositoryMockRecorder) GetUser(ctx, email any) *gomock.Call {
 }
 
 // LockPvz mocks base method.
-func (m *MockRepository) LockPvz(ctx context.Context, id uuid.UUID, mutex repository.DbLock) error {
+func (m *MockRepository) LockPvz(ctx context.Context, id uuid.UUID) (repository.Tx, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "LockPvz", ctx, id, mutex)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret := m.ctrl.Call(m, "LockPvz", ctx, id)
+	ret0, _ := ret[0].(repository.Tx)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // LockPvz indicates an expected call of LockPvz.
-func (mr *MockRepositoryMockRecorder) LockPvz(ctx, id, mutex any) *gomock.Call {
+func (mr *MockRepositoryMockRecorder) LockPvz(ctx, id any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LockPvz", reflect.TypeOf((*MockRepository)(nil).LockPvz), ctx, id, mutex)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LockPvz", reflect.TypeOf((*MockRepository)(nil).LockPvz), ctx, id)
 }
 
 // LockReception mocks base method.
-func (m *MockRepository) LockReception(ctx context.Context, id uuid.UUID, mutex repository.DbLock) error {
+func (m *MockRepository) LockReception(ctx context.Context, id uuid.UUID, lock repository.DbLock) (repository.Tx, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "LockReception", ctx, id, mutex)
-	ret0, _ := ret[0].(error)
-	return ret0
+	ret := m.ctrl.Call(m, "LockReception", ctx, id, lock)
+	ret0, _ := ret[0].(repository.Tx)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
 }
 
 // LockReception indicates an expected call of LockReception.
-func (mr *MockRepositoryMockRecorder) LockReception(ctx, id, mutex any) *gomock.Call {
+func (mr *MockRepositoryMockRecorder) LockReception(ctx, id, lock any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LockReception", reflect.TypeOf((*MockRepository)(nil).LockReception), ctx, id, mutex)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LockReception", reflect.TypeOf((*MockRepository)(nil).LockReception), ctx, id, lock)
 }
 
 // UpdateReceptionStatus mocks base method.

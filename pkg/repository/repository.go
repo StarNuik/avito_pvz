@@ -1,6 +1,7 @@
 package repository
 
 //go:generate mockgen -destination=../mocks/mock_repository.go -package=mocks github.com/starnuik/avito_pvz/pkg/repository Repository
+//go:generate mockgen -destination=../mocks/mock_repository_tx.go -package=mocks github.com/starnuik/avito_pvz/pkg/repository Tx
 
 import (
 	"context"
@@ -13,8 +14,8 @@ import (
 // TODO doc
 type Repository interface {
 	// Lock
-	LockPvz(ctx context.Context, id uuid.UUID, lock DbLock) error
-	LockReception(ctx context.Context, id uuid.UUID, lock DbLock) error
+	LockPvz(ctx context.Context, id uuid.UUID) (Tx, error)
+	LockReception(ctx context.Context, id uuid.UUID, lock DbLock) (Tx, error)
 
 	// Create
 	CreateProduct(ctx context.Context, product entity.Product) (entity.Product, error)
@@ -24,12 +25,18 @@ type Repository interface {
 
 	// Read
 	GetUser(ctx context.Context, email string) (entity.User, error)
+	GetOpenReception(ctx context.Context, pvzId uuid.UUID) (entity.Reception, error)
 
 	// Update
 	UpdateReceptionStatus(ctx context.Context, id uuid.UUID, status entity.ReceptionStatus) (entity.Reception, error)
 
 	// Delete
 	DeleteProduct(ctx context.Context, id uuid.UUID) error
+}
+
+type Tx interface {
+	Commit() error
+	Rollback() error
 }
 
 /*
@@ -51,6 +58,21 @@ type pgImpl struct {
 	conn *pgx.Conn
 }
 
+// GetOpenReception implements Repository.
+func (repo *pgImpl) GetOpenReception(ctx context.Context, pvzId uuid.UUID) (entity.Reception, error) {
+	panic("unimplemented")
+}
+
+// LockPvz implements Repository.
+func (repo *pgImpl) LockPvz(ctx context.Context, id uuid.UUID) (Tx, error) {
+	panic("unimplemented")
+}
+
+// LockReception implements Repository.
+func (repo *pgImpl) LockReception(ctx context.Context, id uuid.UUID, lock DbLock) (Tx, error) {
+	panic("unimplemented")
+}
+
 func New(ctx context.Context, connString string) (*pgImpl, error) {
 	conn, err := pgx.Connect(ctx, connString)
 	if err != nil {
@@ -68,16 +90,6 @@ const (
 	LockAllowWrites DbLock = iota
 	LockNoWrites
 )
-
-// LockPvz implements Repository.
-func (repo *pgImpl) LockPvz(ctx context.Context, id uuid.UUID, lock DbLock) error {
-	panic("unimplemented")
-}
-
-// LockReception implements Repository.
-func (repo *pgImpl) LockReception(ctx context.Context, id uuid.UUID, lock DbLock) error {
-	panic("unimplemented")
-}
 
 /*
 TODO

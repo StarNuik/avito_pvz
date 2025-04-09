@@ -8,7 +8,6 @@ import (
 	"github.com/google/uuid"
 	"github.com/starnuik/avito_pvz/pkg/entity"
 	"github.com/starnuik/avito_pvz/pkg/mocks"
-	"github.com/starnuik/avito_pvz/pkg/repository"
 	"github.com/starnuik/avito_pvz/pkg/token"
 	"github.com/starnuik/avito_pvz/pkg/usecase"
 	"github.com/stretchr/testify/require"
@@ -27,9 +26,16 @@ func Test_CreateReception(t *testing.T) {
 		Status:   entity.StatusInProgress,
 	}
 
+	tx := mocks.NewMockTx(ctrl)
+	tx.EXPECT().Rollback().After(tx.EXPECT().Commit())
+
 	repo := mocks.NewMockRepository(ctrl)
 	repo.EXPECT().
-		LockPvz(gomock.Any(), reception.PvzId, repository.LockAllowWrites)
+		LockPvz(gomock.Any(), reception.PvzId).
+		Return(tx, nil)
+	repo.EXPECT().
+		GetOpenReception(gomock.Any(), reception.PvzId).
+		Return(entity.Reception{}, entity.ErrNotFound)
 	repo.EXPECT().
 		CreateReception(gomock.Any(), reception).
 		Return(reception, nil)
