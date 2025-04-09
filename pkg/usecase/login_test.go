@@ -25,16 +25,16 @@ func Test_Login_HappyPath(t *testing.T) {
 
 	repo := mocks.NewMockRepository(ctrl)
 	repo.EXPECT().
-		GetUser(gomock.Any(), gomock.Eq(user.Email)).
+		GetUser(gomock.Any(), user.Email).
 		Return(user, nil)
 
 	hasher := mocks.NewMockHasher(ctrl)
 	hasher.EXPECT().
-		Compare(gomock.Eq(password), gomock.Eq(user.PasswordHash)).
+		Compare(password, user.PasswordHash).
 		Return(true)
 
 	ctx := context.Background()
-	usecase := usecase.New(repo, hasher)
+	usecase := usecase.New(repo, hasher, nil)
 
 	// Act
 	result, err := usecase.Login(ctx, user.Email, password)
@@ -55,7 +55,7 @@ func Test_Login_UserNotFound(t *testing.T) {
 		Return(entity.User{}, entity.ErrNotFound)
 
 	ctx := context.Background()
-	usecase := usecase.New(repo, nil)
+	usecase := usecase.New(repo, nil, nil)
 
 	// Act
 	_, err := usecase.Login(ctx, "email", "password")
@@ -77,7 +77,7 @@ func Test_Login_PasswordDoesntMatch(t *testing.T) {
 
 	repo := mocks.NewMockRepository(ctrl)
 	repo.EXPECT().
-		GetUser(gomock.Any(), gomock.Eq(user.Email)).
+		GetUser(gomock.Any(), user.Email).
 		Return(user, nil)
 
 	hasher := mocks.NewMockHasher(ctrl)
@@ -86,7 +86,7 @@ func Test_Login_PasswordDoesntMatch(t *testing.T) {
 		Return(false)
 
 	ctx := context.Background()
-	usecase := usecase.New(repo, hasher)
+	usecase := usecase.New(repo, hasher, nil)
 
 	// Act
 	_, err := usecase.Login(ctx, user.Email, "password")
