@@ -5,6 +5,8 @@ import (
 	"github.com/starnuik/avito_pvz/pkg/token"
 )
 
-func (u *usecase) DummyLogin(userRole entity.UserRole) (token.Payload, error) {
-	panic("")
+func (u *usecase) DummyLogin(userRole entity.UserRole) token.Payload {
+	return token.Payload{
+		UserRole: userRole,
+	}
 }

@@ -14,7 +14,7 @@ type Usecase interface {
 	// Auth
 	Login(email string, password string) (token.Payload, error)
 	Register(email string, password string, role entity.UserRole) (entity.User, error)
-	DummyLogin(userRole entity.UserRole) (token.Payload, error)
+	DummyLogin(userRole entity.UserRole) token.Payload
 
 	// Create
 	CreatePvz(token token.Payload, city entity.PvzCity, id *uuid.UUID, registrationDate *time.Time) (entity.Pvz, error)
