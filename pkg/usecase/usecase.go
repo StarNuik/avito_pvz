@@ -20,39 +20,41 @@ func New(repo repository.Repository) *Usecase {
 }
 
 // Auth
-func (u *Usecase) DummyLogin(userRole entity.UserRole) token.Token {
+func (u *Usecase) DummyLogin(userRole entity.UserRole) (token.Token, error) {
 	panic("")
 }
 
-func (u *Usecase) Register(email string, password string, role entity.UserRole) entity.User {
+func (u *Usecase) Register(email string, password string, role entity.UserRole) (entity.User, error) {
 	panic("")
 }
 
-func (u *Usecase) Login(email string, password string) token.Token {
+func (u *Usecase) Login(email string, password string) (token.Token, error) {
 	panic("")
 }
 
 // Create
-func (u *Usecase) CreatePvz(reqRole entity.UserRole, city entity.PvzCity, id *uuid.UUID, registrationDate *time.Time) (entity.Pvz, error) {
+func (u *Usecase) CreatePvz(userRole entity.UserRole, city entity.PvzCity, id *uuid.UUID, registrationDate *time.Time) (entity.Pvz, error) {
 	panic("")
 }
 
-func (u *Usecase) CreateReception(reqRole entity.UserRole, pvzId uuid.UUID) (entity.Reception, error) {
+func (u *Usecase) CreateReception(userRole entity.UserRole, pvzId uuid.UUID) (entity.Reception, error) {
 	panic("")
 }
 
-func (u *Usecase) CreateProduct(reqRole entity.UserRole, pvzId uuid.UUID, productType entity.ProductType) (entity.Product, error) {
+func (u *Usecase) CreateProduct(userRole entity.UserRole, pvzId uuid.UUID, productType entity.ProductType) (entity.Product, error) {
 	panic("")
 }
 
 // Read
-// func (u *Usecase) GetPvz() error {}
-
-// Update / Delete
-func (u *Usecase) CloseLastReception(reqRole entity.UserRole, pvzId uuid.UUID) (entity.Reception, error) {
+func (u *Usecase) GetPvz(userRole entity.UserRole, startDate time.Time, endDate time.Time, page *int, limit *int) (entity.PvzInfo, error) {
 	panic("")
 }
 
-func (u *Usecase) DeleteLastProduct(reqRole entity.UserRole, pvzId uuid.UUID) error {
+// Update / Delete
+func (u *Usecase) CloseLastReception(userRole entity.UserRole, pvzId uuid.UUID) (entity.Reception, error) {
+	panic("")
+}
+
+func (u *Usecase) DeleteLastProduct(userRole entity.UserRole, pvzId uuid.UUID) error {
 	panic("")
 }
