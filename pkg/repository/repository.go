@@ -45,6 +45,8 @@ func New(ctx context.Context, connString string) (*pgImpl, error) {
 // how do i treat optional json parameters?
 // ignore them?
 // send them to the db?
+// SOLUTION
+// do not create uuid's in the db, set them as 'not null' only
 
 // TODO
 // func (repo *Repository) GetInfo()

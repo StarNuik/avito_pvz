@@ -84,5 +84,3 @@ type GetPvzResponse []struct {
 		Products  []ProductResponse
 	}
 }
-
-// type GetPvzResponse struct{}
