@@ -12,7 +12,7 @@ import (
 	"go.uber.org/mock/gomock"
 )
 
-func Test_Register_HappyPath(t *testing.T) {
+func Test_Register(t *testing.T) {
 	// Arrange
 	require := require.New(t)
 	ctrl := gomock.NewController(t)
