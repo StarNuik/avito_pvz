@@ -2,7 +2,10 @@ module github.com/starnuik/avito_pvz
 
 go 1.24.1
 
-require github.com/jackc/pgx/v5 v5.7.4
+require (
+	github.com/jackc/pgx/v5 v5.7.4
+	go.uber.org/mock v0.5.1
+)
 
 require (
 	github.com/davecgh/go-spew v1.1.1 // indirect
