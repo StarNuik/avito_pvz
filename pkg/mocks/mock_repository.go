@@ -15,6 +15,7 @@ import (
 
 	uuid "github.com/google/uuid"
 	entity "github.com/starnuik/avito_pvz/pkg/entity"
+	repository "github.com/starnuik/avito_pvz/pkg/repository"
 	gomock "go.uber.org/mock/gomock"
 )
 
@@ -129,6 +130,34 @@ func (m *MockRepository) GetUser(ctx context.Context, email string) (entity.User
 func (mr *MockRepositoryMockRecorder) GetUser(ctx, email any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetUser", reflect.TypeOf((*MockRepository)(nil).GetUser), ctx, email)
+}
+
+// LockPvz mocks base method.
+func (m *MockRepository) LockPvz(ctx context.Context, id uuid.UUID, mutex repository.DbLock) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "LockPvz", ctx, id, mutex)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// LockPvz indicates an expected call of LockPvz.
+func (mr *MockRepositoryMockRecorder) LockPvz(ctx, id, mutex any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LockPvz", reflect.TypeOf((*MockRepository)(nil).LockPvz), ctx, id, mutex)
+}
+
+// LockReception mocks base method.
+func (m *MockRepository) LockReception(ctx context.Context, id uuid.UUID, mutex repository.DbLock) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "LockReception", ctx, id, mutex)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// LockReception indicates an expected call of LockReception.
+func (mr *MockRepositoryMockRecorder) LockReception(ctx, id, mutex any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "LockReception", reflect.TypeOf((*MockRepository)(nil).LockReception), ctx, id, mutex)
 }
 
 // UpdateReceptionStatus mocks base method.

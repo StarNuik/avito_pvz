@@ -25,6 +25,11 @@ type Pvz struct {
 
 type ReceptionStatus int
 
+const (
+	StatusInProgress ReceptionStatus = iota
+	StatusClose
+)
+
 type Reception struct {
 	Id       uuid.UUID
 	PvzId    uuid.UUID

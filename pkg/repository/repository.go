@@ -12,6 +12,10 @@ import (
 
 // TODO doc
 type Repository interface {
+	// Lock
+	LockPvz(ctx context.Context, id uuid.UUID, lock DbLock) error
+	LockReception(ctx context.Context, id uuid.UUID, lock DbLock) error
+
 	// Create
 	CreateProduct(ctx context.Context, product entity.Product) (entity.Product, error)
 	CreatePvz(ctx context.Context, pvz entity.Pvz) (entity.Pvz, error)
@@ -27,6 +31,19 @@ type Repository interface {
 	// Delete
 	DeleteProduct(ctx context.Context, id uuid.UUID) error
 }
+
+/*
+Tx {
+	LockPvz
+		LastReception
+		CreateReception
+		UpdateReceptionStatus
+	LockReception
+		CreateProduct
+		DeleteProduct
+		LastProduct
+}
+*/
 
 var _ Repository = (*pgImpl)(nil)
 
@@ -45,12 +62,31 @@ func New(ctx context.Context, connString string) (*pgImpl, error) {
 	}, nil
 }
 
-// TODO
-// how do i treat optional json parameters?
-// ignore them?
-// send them to the db?
-// SOLUTION
-// do not create uuid's in the db, set them as 'not null' only
+type DbLock int
+
+const (
+	LockAllowWrites DbLock = iota
+	LockNoWrites
+)
+
+// LockPvz implements Repository.
+func (repo *pgImpl) LockPvz(ctx context.Context, id uuid.UUID, lock DbLock) error {
+	panic("unimplemented")
+}
+
+// LockReception implements Repository.
+func (repo *pgImpl) LockReception(ctx context.Context, id uuid.UUID, lock DbLock) error {
+	panic("unimplemented")
+}
+
+/*
+TODO
+how do i treat optional json parameters?
+ignore them?
+send them to the db?
+SOLUTION
+do not create uuid's in the db, set them as 'not null' only
+*/
 
 // TODO
 // func (repo *Repository) GetInfo()
@@ -68,6 +104,7 @@ func New(ctx context.Context, connString string) (*pgImpl, error) {
 // 	panic("")
 // }
 
+// // required by: CreateReception,
 // func (repo *pgImpl) LastReception(ctx context.Context) (entity.Reception, error) {
 // 	panic("")
 // }
