@@ -26,6 +26,8 @@ type Repository interface {
 	DeleteProduct(ctx context.Context, id uuid.UUID) error
 }
 
+var _ Repository = (*pgImpl)(nil)
+
 type pgImpl struct {
 	conn *pgx.Conn
 }
