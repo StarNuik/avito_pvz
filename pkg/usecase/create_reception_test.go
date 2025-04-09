@@ -8,6 +8,7 @@ import (
 	"github.com/google/uuid"
 	"github.com/starnuik/avito_pvz/pkg/entity"
 	"github.com/starnuik/avito_pvz/pkg/mocks"
+	"github.com/starnuik/avito_pvz/pkg/repository"
 	"github.com/starnuik/avito_pvz/pkg/token"
 	"github.com/starnuik/avito_pvz/pkg/usecase"
 	"github.com/stretchr/testify/require"
@@ -31,7 +32,7 @@ func Test_CreateReception(t *testing.T) {
 
 	repo := mocks.NewMockRepository(ctrl)
 	repo.EXPECT().
-		LockPvz(gomock.Any(), reception.PvzId).
+		LockPvz(gomock.Any(), reception.PvzId, repository.LockNoWrites).
 		Return(tx, nil)
 	repo.EXPECT().
 		GetOpenReception(gomock.Any(), reception.PvzId).
@@ -61,6 +62,43 @@ func Test_CreateReception(t *testing.T) {
 	// Assert
 	require.Nil(err)
 	require.Equal(reception, result)
+}
+
+func Test_CreateReception_AlreadyExists(t *testing.T) {
+	// Arrange
+	require := require.New(t)
+	ctrl := gomock.NewController(t)
+
+	reception := entity.Reception{
+		Id:       uuid.Max,
+		PvzId:    uuid.Max,
+		DateTime: time.Unix(1000, 0),
+		Status:   entity.StatusInProgress,
+	}
+
+	tx := mocks.NewMockTx(ctrl)
+	tx.EXPECT().Rollback()
+
+	repo := mocks.NewMockRepository(ctrl)
+	repo.EXPECT().
+		LockPvz(gomock.Any(), reception.PvzId, repository.LockNoWrites).
+		Return(tx, nil)
+	repo.EXPECT().
+		GetOpenReception(gomock.Any(), reception.PvzId).
+		Return(reception, nil)
+
+	usecase := usecase.New(repo, nil, nil)
+
+	ctx := context.Background()
+	token := token.Payload{
+		UserRole: entity.RoleEmployee,
+	}
+
+	// Act
+	_, err := usecase.CreateReception(ctx, token, reception.PvzId)
+
+	// Assert
+	require.ErrorIs(err, entity.ErrAlreadyExists)
 }
 
 func Test_CreateReception_Unauthorized(t *testing.T) {

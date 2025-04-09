@@ -14,8 +14,7 @@ import (
 // TODO doc
 type Repository interface {
 	// Lock
-	LockPvz(ctx context.Context, id uuid.UUID) (Tx, error)
-	LockReception(ctx context.Context, id uuid.UUID, lock DbLock) (Tx, error)
+	LockPvz(ctx context.Context, id uuid.UUID, lock DbLock) (Tx, error)
 
 	// Create
 	CreateProduct(ctx context.Context, product entity.Product) (entity.Product, error)
@@ -58,18 +57,12 @@ type pgImpl struct {
 	conn *pgx.Conn
 }
 
-// GetOpenReception implements Repository.
 func (repo *pgImpl) GetOpenReception(ctx context.Context, pvzId uuid.UUID) (entity.Reception, error) {
 	panic("unimplemented")
 }
 
-// LockPvz implements Repository.
-func (repo *pgImpl) LockPvz(ctx context.Context, id uuid.UUID) (Tx, error) {
-	panic("unimplemented")
-}
-
-// LockReception implements Repository.
-func (repo *pgImpl) LockReception(ctx context.Context, id uuid.UUID, lock DbLock) (Tx, error) {
+// dont create multiple receptions
+func (repo *pgImpl) LockPvz(ctx context.Context, id uuid.UUID, lock DbLock) (Tx, error) {
 	panic("unimplemented")
 }
 
