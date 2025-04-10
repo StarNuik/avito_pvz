@@ -117,6 +117,21 @@ func (mr *MockRepositoryMockRecorder) DeleteProduct(ctx, id any) *gomock.Call {
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "DeleteProduct", reflect.TypeOf((*MockRepository)(nil).DeleteProduct), ctx, id)
 }
 
+// GetLastProduct mocks base method.
+func (m *MockRepository) GetLastProduct(ctx context.Context, pvzId uuid.UUID) (entity.Product, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetLastProduct", ctx, pvzId)
+	ret0, _ := ret[0].(entity.Product)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetLastProduct indicates an expected call of GetLastProduct.
+func (mr *MockRepositoryMockRecorder) GetLastProduct(ctx, pvzId any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLastProduct", reflect.TypeOf((*MockRepository)(nil).GetLastProduct), ctx, pvzId)
+}
+
 // GetOpenReception mocks base method.
 func (m *MockRepository) GetOpenReception(ctx context.Context, pvzId uuid.UUID) (entity.Reception, error) {
 	m.ctrl.T.Helper()

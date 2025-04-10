@@ -25,6 +25,7 @@ type Repository interface {
 	// Read
 	GetUser(ctx context.Context, email string) (entity.User, error)
 	GetOpenReception(ctx context.Context, pvzId uuid.UUID) (entity.Reception, error)
+	GetLastProduct(ctx context.Context, pvzId uuid.UUID) (entity.Product, error)
 
 	// Update
 	UpdateReceptionStatus(ctx context.Context, id uuid.UUID, status entity.ReceptionStatus) (entity.Reception, error)
@@ -33,6 +34,7 @@ type Repository interface {
 	DeleteProduct(ctx context.Context, id uuid.UUID) error
 }
 
+// TODO doc
 type Tx interface {
 	Commit() error
 	Rollback() error
@@ -55,6 +57,10 @@ var _ Repository = (*pgImpl)(nil)
 
 type pgImpl struct {
 	conn *pgx.Conn
+}
+
+func (repo *pgImpl) GetLastProduct(ctx context.Context, pvzId uuid.UUID) (entity.Product, error) {
+	panic("unimplemented")
 }
 
 func (repo *pgImpl) GetOpenReception(ctx context.Context, pvzId uuid.UUID) (entity.Reception, error) {
