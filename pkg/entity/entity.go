@@ -51,4 +51,8 @@ type User struct {
 	PasswordHash []byte
 }
 
-type PvzInfo map[Pvz]map[Reception][]Product
+type PvzInfo struct {
+	Pvzs       map[uuid.UUID]Pvz
+	Receptions map[uuid.UUID]Reception
+	Products   map[uuid.UUID]Product
+}

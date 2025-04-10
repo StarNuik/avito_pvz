@@ -29,4 +29,4 @@ create table products (
 	type int not null
 );
 create index idxProductsReceptionId on products(receptionId);
---- todo idx date?
+create index idxProductsDateTime on products(dateTime);

@@ -10,7 +10,7 @@ import (
 
 func (u *usecase) GetPvzInfo(ctx context.Context, token token.Payload, startDate time.Time, endDate time.Time, page *int, limit *int) (entity.PvzInfo, error) {
 	if token.UserRole != entity.RoleEmployee && token.UserRole != entity.RoleModerator {
-		return nil, entity.ErrUnauthorized
+		return entity.PvzInfo{}, entity.ErrUnauthorized
 	}
 
 	if page == nil {
@@ -25,7 +25,7 @@ func (u *usecase) GetPvzInfo(ctx context.Context, token token.Payload, startDate
 
 	info, err := u.repo.GetPvzInfo(ctx, startDate, endDate, *limit, offset)
 	if err != nil {
-		return nil, err
+		return entity.PvzInfo{}, err
 	}
 
 	return info, nil

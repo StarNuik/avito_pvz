@@ -18,7 +18,7 @@ func Test_GetPvzInfo_AllOptions(t *testing.T) {
 	require := require.New(t)
 	ctrl := gomock.NewController(t)
 
-	pvzInfo := make(entity.PvzInfo)
+	pvzInfo := entity.PvzInfo{}
 	startDate := time.Unix(500, 0)
 	endDate := time.Unix(1000, 0)
 	page := 5
@@ -50,7 +50,7 @@ func Test_GetPvzInfo_NoOptions(t *testing.T) {
 	require := require.New(t)
 	ctrl := gomock.NewController(t)
 
-	pvzInfo := make(entity.PvzInfo)
+	pvzInfo := entity.PvzInfo{}
 	startDate := time.Unix(500, 0)
 	endDate := time.Unix(1000, 0)
 	limit := 10

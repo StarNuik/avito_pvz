@@ -61,10 +61,6 @@ type pgImpl struct {
 	conn *pgx.Conn
 }
 
-func (repo *pgImpl) GetPvzInfo(ctx context.Context, startDate time.Time, endDate time.Time, limit int, offset int) (entity.PvzInfo, error) {
-	panic("unimplemented")
-}
-
 // dont create multiple receptions
 func (repo *pgImpl) LockPvz(ctx context.Context, id uuid.UUID, lock DbLock) (Tx, error) {
 	panic("unimplemented")
