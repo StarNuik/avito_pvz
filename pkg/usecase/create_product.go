@@ -25,6 +25,10 @@ func (u *usecase) CreateProduct(ctx context.Context, token token.Payload, pvzId 
 		return entity.Product{}, err
 	}
 
+	if reception.Status != entity.StatusInProgress {
+		return entity.Product{}, entity.ErrReceptionClosed
+	}
+
 	id, err := u.gen.Uuid()
 	if err != nil {
 		return entity.Product{}, err

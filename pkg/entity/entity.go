@@ -27,7 +27,7 @@ type ReceptionStatus int
 
 const (
 	StatusInProgress ReceptionStatus = iota
-	StatusClose
+	StatusClosed
 )
 
 type Reception struct {

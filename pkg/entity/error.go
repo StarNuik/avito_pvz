@@ -5,11 +5,12 @@ import (
 )
 
 var (
-	ErrUnauthorized   = fmt.Errorf("not authorized to access this resource")
-	ErrNotFound       = fmt.Errorf("not found")
-	ErrIncorrectLogin = fmt.Errorf("incorrect email or password")
-	ErrAlreadyExists  = fmt.Errorf("resource already exists")
-	ErrInternal       = fmt.Errorf("internal error")
+	ErrUnauthorized    = fmt.Errorf("not authorized to access this resource")
+	ErrNotFound        = fmt.Errorf("not found")
+	ErrIncorrectLogin  = fmt.Errorf("incorrect email or password")
+	ErrAlreadyExists   = fmt.Errorf("resource already exists")
+	ErrReceptionClosed = fmt.Errorf("resource is already closed")
+	ErrInternal        = fmt.Errorf("internal error")
 )
 
 // TODO hide inner error

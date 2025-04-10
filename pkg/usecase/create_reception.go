@@ -21,12 +21,12 @@ func (u *usecase) CreateReception(ctx context.Context, token token.Payload, pvzI
 	}
 	defer tx.Rollback()
 
-	_, err = u.repo.GetLastReception(ctx, pvzId)
-	if err == nil {
-		return entity.Reception{}, entity.ErrAlreadyExists
-	}
-	if !errors.Is(err, entity.ErrNotFound) {
+	lastReception, err := u.repo.GetLastReception(ctx, pvzId)
+	if err != nil && !errors.Is(err, entity.ErrNotFound) {
 		return entity.Reception{}, err
+	}
+	if err == nil && lastReception.Status == entity.StatusInProgress {
+		return entity.Reception{}, entity.ErrAlreadyExists
 	}
 
 	id, err := u.gen.Uuid()
@@ -42,7 +42,6 @@ func (u *usecase) CreateReception(ctx context.Context, token token.Payload, pvzI
 		DateTime: now,
 		Status:   entity.StatusInProgress,
 	}
-
 	err = u.repo.CreateReception(ctx, reception)
 	if err != nil {
 		return entity.Reception{}, err

@@ -21,12 +21,15 @@ func (u *usecase) CloseLastReception(ctx context.Context, token token.Payload, p
 	defer tx.Rollback()
 
 	reception, err := u.repo.GetLastReception(ctx, pvzId)
-	// includes entity.ErrNotFound
 	if err != nil {
 		return entity.Reception{}, err
 	}
 
-	reception, err = u.repo.UpdateReceptionStatus(ctx, reception.Id, entity.StatusClose)
+	if reception.Status != entity.StatusInProgress {
+		return entity.Reception{}, entity.ErrReceptionClosed
+	}
+
+	reception, err = u.repo.UpdateReceptionStatus(ctx, reception.Id, entity.StatusClosed)
 	if err != nil {
 		return entity.Reception{}, err
 	}

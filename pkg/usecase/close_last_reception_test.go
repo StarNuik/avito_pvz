@@ -20,26 +20,28 @@ func Test_CloseLastReception(t *testing.T) {
 	require := require.New(t)
 	ctrl := gomock.NewController(t)
 
-	reception := entity.Reception{
+	receptionOpen := entity.Reception{
 		Id:       uuid.Max,
 		PvzId:    uuid.Max,
-		Status:   entity.StatusClose,
+		Status:   entity.StatusInProgress,
 		DateTime: time.Unix(1000, 0),
 	}
+	receptionClosed := receptionOpen
+	receptionClosed.Status = entity.StatusClosed
 
 	tx := mocks.NewMockTx(ctrl)
 	tx.EXPECT().Rollback().After(tx.EXPECT().Commit())
 
 	repo := mocks.NewMockRepository(ctrl)
 	repo.EXPECT().
-		LockPvz(gomock.Any(), reception.PvzId, repository.LockNoWrites).
+		LockPvz(gomock.Any(), receptionOpen.PvzId, repository.LockNoWrites).
 		Return(tx, nil)
 	repo.EXPECT().
-		GetLastReception(gomock.Any(), reception.PvzId).
-		Return(reception, nil)
+		GetLastReception(gomock.Any(), receptionOpen.PvzId).
+		Return(receptionOpen, nil)
 	repo.EXPECT().
-		UpdateReceptionStatus(gomock.Any(), reception.Id, entity.StatusClose).
-		Return(reception, nil)
+		UpdateReceptionStatus(gomock.Any(), receptionOpen.Id, entity.StatusClosed).
+		Return(receptionClosed, nil)
 
 	usecase := usecase.New(repo, nil, nil)
 
@@ -49,9 +51,9 @@ func Test_CloseLastReception(t *testing.T) {
 	}
 
 	// Act
-	result, err := usecase.CloseLastReception(ctx, token, reception.PvzId)
+	result, err := usecase.CloseLastReception(ctx, token, receptionOpen.PvzId)
 
 	// Assert
 	require.Nil(err)
-	require.Equal(reception, result)
+	require.Equal(receptionClosed, result)
 }
