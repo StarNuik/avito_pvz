@@ -43,7 +43,7 @@ func Test_CreateProduct(t *testing.T) {
 		Return(reception, nil)
 	repo.EXPECT().
 		CreateProduct(gomock.Any(), product).
-		Return(product, nil)
+		Return(nil)
 
 	gen := mocks.NewMockGen(ctrl)
 	gen.EXPECT().

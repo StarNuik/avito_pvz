@@ -28,7 +28,7 @@ func Test_CreatePvz_AllOptions(t *testing.T) {
 	repo := mocks.NewMockRepository(ctrl)
 	repo.EXPECT().
 		CreatePvz(gomock.Any(), pvz).
-		Return(pvz, nil)
+		Return(nil)
 
 	usecase := usecase.New(repo, nil, nil)
 

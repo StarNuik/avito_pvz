@@ -37,7 +37,7 @@ func Test_Register(t *testing.T) {
 
 	repo := mocks.NewMockRepository(ctrl)
 	repo.EXPECT().CreateUser(gomock.Any(), user).
-		Return(user, nil)
+		Return(nil)
 
 	ctx := context.Background()
 

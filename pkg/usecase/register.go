@@ -23,7 +23,7 @@ func (u *usecase) Register(ctx context.Context, email string, password string, r
 		PasswordHash: passwordHash,
 		Role:         role,
 	}
-	user, err = u.repo.CreateUser(ctx, user)
+	err = u.repo.CreateUser(ctx, user)
 
 	return user, err
 }

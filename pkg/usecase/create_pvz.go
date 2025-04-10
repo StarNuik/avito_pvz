@@ -32,7 +32,7 @@ func (u *usecase) CreatePvz(ctx context.Context, token token.Payload, city entit
 		RegistrationDate: *registrationDate,
 		City:             city,
 	}
-	pvz, err := u.repo.CreatePvz(ctx, pvz)
+	err := u.repo.CreatePvz(ctx, pvz)
 
 	return pvz, err
 }

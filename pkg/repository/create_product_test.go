@@ -5,7 +5,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/starnuik/avito_pvz/pkg/entity"
 	"github.com/starnuik/avito_pvz/pkg/pvztest"
 	"github.com/stretchr/testify/require"
@@ -19,40 +18,33 @@ func Test_CreateProduct_ReceptionExists(t *testing.T) {
 	testRepo.Clear(t)
 
 	pvz := entity.Pvz{
-		Id:               pvztest.NewUuid(t),
-		RegistrationDate: time.Now().UTC(),
-		City:             entity.PvzCity(0),
+		Id: pvztest.NewUuid(t),
 	}
 	testRepo.CreatePvz(t, pvz)
 
 	reception := entity.Reception{
-		Id:       uuid.Nil,
-		PvzId:    pvz.Id,
-		DateTime: time.Now().UTC(),
-		Status:   entity.ReceptionStatus(0),
+		Id:    pvztest.NewUuid(t),
+		PvzId: pvz.Id,
 	}
 	testRepo.CreateReception(t, reception)
 
 	product := entity.Product{
-		Id:          uuid.Nil,
-		DateTime:    time.UnixMicro(0),
+		Id:          pvztest.NewUuid(t),
+		DateTime:    time.Unix(1000, 0),
 		ReceptionId: reception.Id,
-		Type:        entity.ProductType(0),
+		Type:        entity.ProductType(128),
 	}
 	ctx := context.Background()
 	repo := pvztest.NewRepository(t)
 
 	// Act
-	result, err := repo.CreateProduct(ctx, product)
+	err := repo.CreateProduct(ctx, product)
 
 	// Assert
 	require.Nil(err)
 
-	require.NotEqual(uuid.Nil, result.Id)
-	require.NotEqual(time.UnixMicro(0), result.DateTime)
-
-	require.Equal(product.ReceptionId, result.ReceptionId)
-	require.Equal(product.Type, result.Type)
+	result := testRepo.GetProduct(t, product.Id)
+	require.Equal(product, result)
 }
 
 func Test_CreateProduct_NoReception(t *testing.T) {
@@ -62,18 +54,13 @@ func Test_CreateProduct_NoReception(t *testing.T) {
 	testRepo := pvztest.NewTestRepository(t)
 	testRepo.Clear(t)
 
-	product := entity.Product{
-		Id:          uuid.Nil,
-		DateTime:    time.UnixMicro(0),
-		ReceptionId: uuid.Nil,
-		Type:        entity.ProductType(0),
-	}
+	product := entity.Product{}
 	ctx := context.Background()
 	repo := pvztest.NewRepository(t)
 
 	// Act
-	_, err := repo.CreateProduct(ctx, product)
+	err := repo.CreateProduct(ctx, product)
 
 	// Assert
-	require.Error(err)
+	require.ErrorIs(err, entity.ErrInternal)
 }

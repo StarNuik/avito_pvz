@@ -39,7 +39,7 @@ func Test_CreateReception(t *testing.T) {
 		Return(entity.Reception{}, entity.ErrNotFound)
 	repo.EXPECT().
 		CreateReception(gomock.Any(), reception).
-		Return(reception, nil)
+		Return(nil)
 
 	gen := mocks.NewMockGen(ctrl)
 	gen.EXPECT().

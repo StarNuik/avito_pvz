@@ -27,13 +27,8 @@ func Test_CreateUser(t *testing.T) {
 	ctx := context.Background()
 
 	// Act
-	result, err := repo.CreateUser(ctx, user)
+	err := repo.CreateUser(ctx, user)
 
 	// Assert
 	require.Nil(err)
-	require.NotEqual(uuid.Nil, result.Id)
-
-	require.Equal(user.Email, result.Email)
-	require.Equal(user.Role, result.Role)
-	require.Equal(user.PasswordHash, result.PasswordHash)
 }

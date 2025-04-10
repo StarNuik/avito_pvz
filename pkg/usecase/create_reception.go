@@ -43,7 +43,7 @@ func (u *usecase) CreateReception(ctx context.Context, token token.Payload, pvzI
 		Status:   entity.StatusInProgress,
 	}
 
-	reception, err = u.repo.CreateReception(ctx, reception)
+	err = u.repo.CreateReception(ctx, reception)
 	if err != nil {
 		return entity.Reception{}, err
 	}

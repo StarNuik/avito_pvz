@@ -4,6 +4,7 @@ import (
 	"context"
 	"testing"
 
+	"github.com/google/uuid"
 	"github.com/jackc/pgx/v5"
 	"github.com/starnuik/avito_pvz/pkg/entity"
 )
@@ -97,4 +98,55 @@ func (repo *TestRepository) CreateProduct(t *testing.T, product entity.Product) 
 	if err != nil {
 		t.Fatal(err)
 	}
+}
+
+func (repo *TestRepository) GetProduct(t *testing.T, productId uuid.UUID) entity.Product {
+	ctx := context.Background()
+	row := repo.conn.QueryRow(ctx, `
+		select id, dateTime, receptionId, type
+		from products
+		where id = $1
+	`, productId)
+
+	product := entity.Product{}
+	err := row.Scan(&product.Id, &product.DateTime, &product.ReceptionId, &product.Type)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	return product
+}
+
+func (repo *TestRepository) GetPvz(t *testing.T, pvzId uuid.UUID) entity.Pvz {
+	ctx := context.Background()
+	row := repo.conn.QueryRow(ctx, `
+		select id, registrationDate, city
+		from pvzs
+		where id = $1
+	`, pvzId)
+
+	pvz := entity.Pvz{}
+	err := row.Scan(&pvz.Id, &pvz.RegistrationDate, &pvz.City)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	return pvz
+}
+
+func (repo *TestRepository) GetReception(t *testing.T, receptionId uuid.UUID) entity.Reception {
+	ctx := context.Background()
+	row := repo.conn.QueryRow(ctx, `
+		select id, pvzId, dateTime, status
+		from receptions
+		where id = $1
+	`, receptionId)
+
+	reception := entity.Reception{}
+	err := row.Scan(&reception.Id, &reception.PvzId, &reception.DateTime, &reception.Status)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	return reception
 }

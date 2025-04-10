@@ -39,7 +39,7 @@ func (u *usecase) CreateProduct(ctx context.Context, token token.Payload, pvzId 
 		Type:        productType,
 	}
 
-	product, err = u.repo.CreateProduct(ctx, product)
+	err = u.repo.CreateProduct(ctx, product)
 	if err != nil {
 		return entity.Product{}, err
 	}

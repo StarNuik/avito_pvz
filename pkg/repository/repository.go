@@ -18,10 +18,10 @@ type Repository interface {
 	LockPvz(ctx context.Context, id uuid.UUID, lock DbLock) (Tx, error)
 
 	// Create
-	CreateProduct(ctx context.Context, product entity.Product) (entity.Product, error)
-	CreatePvz(ctx context.Context, pvz entity.Pvz) (entity.Pvz, error)
-	CreateReception(ctx context.Context, reception entity.Reception) (entity.Reception, error)
-	CreateUser(ctx context.Context, user entity.User) (entity.User, error)
+	CreateProduct(ctx context.Context, product entity.Product) error
+	CreatePvz(ctx context.Context, pvz entity.Pvz) error
+	CreateReception(ctx context.Context, reception entity.Reception) error
+	CreateUser(ctx context.Context, user entity.User) error
 
 	// Read
 	GetUser(ctx context.Context, email string) (entity.User, error)

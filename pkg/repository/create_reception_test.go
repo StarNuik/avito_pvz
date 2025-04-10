@@ -19,31 +19,27 @@ func Test_CreateReception_PvzExists(t *testing.T) {
 	testRepo.Clear(t)
 
 	pvz := entity.Pvz{
-		Id:               pvztest.NewUuid(t),
-		RegistrationDate: time.Now().UTC(),
-		City:             entity.PvzCity(0),
+		Id: pvztest.NewUuid(t),
 	}
 	testRepo.CreatePvz(t, pvz)
 
 	reception := entity.Reception{
-		Id:       uuid.Nil,
+		Id:       pvztest.NewUuid(t),
 		PvzId:    pvz.Id,
-		DateTime: time.Now().UTC(),
-		Status:   entity.ReceptionStatus(0),
+		DateTime: time.Unix(1000, 0),
+		Status:   entity.ReceptionStatus(128),
 	}
 	ctx := context.Background()
 	repo := pvztest.NewRepository(t)
 
 	// Act
-	result, err := repo.CreateReception(ctx, reception)
+	err := repo.CreateReception(ctx, reception)
 
 	// Assert
 	require.Nil(err)
-	require.NotEqual(uuid.Nil, result.Id)
 
-	require.Equal(reception.PvzId, result.PvzId)
-	require.Equal(reception.Status, result.Status)
-	pvztest.RequireEqualTime(t, reception.DateTime, result.DateTime)
+	result := testRepo.GetReception(t, reception.Id)
+	require.Equal(reception, result)
 }
 
 func Test_CreateReception_NoPvz(t *testing.T) {
@@ -63,8 +59,8 @@ func Test_CreateReception_NoPvz(t *testing.T) {
 	repo := pvztest.NewRepository(t)
 
 	// Act
-	_, err := repo.CreateReception(ctx, reception)
+	err := repo.CreateReception(ctx, reception)
 
 	// Assert
-	require.Error(err)
+	require.ErrorIs(err, entity.ErrInternal)
 }

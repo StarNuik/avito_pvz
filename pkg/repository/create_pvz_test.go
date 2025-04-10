@@ -5,7 +5,6 @@ import (
 	"testing"
 	"time"
 
-	"github.com/google/uuid"
 	"github.com/starnuik/avito_pvz/pkg/entity"
 	"github.com/starnuik/avito_pvz/pkg/pvztest"
 	"github.com/stretchr/testify/require"
@@ -19,20 +18,19 @@ func Test_CreatePvz(t *testing.T) {
 	testRepo.Clear(t)
 
 	pvz := entity.Pvz{
-		Id:               uuid.Nil,
-		RegistrationDate: time.Now().UTC(),
-		City:             entity.PvzCity(0),
+		Id:               pvztest.NewUuid(t),
+		RegistrationDate: time.Unix(1000, 0),
+		City:             entity.PvzCity(128),
 	}
 	ctx := context.Background()
 	repo := pvztest.NewRepository(t)
 
 	// Act
-	result, err := repo.CreatePvz(ctx, pvz)
+	err := repo.CreatePvz(ctx, pvz)
 
 	// Assert
 	require.Nil(err)
-	require.NotEqual(uuid.Nil, result.Id)
 
-	require.Equal(pvz.City, result.City)
-	pvztest.RequireEqualTime(t, pvz.RegistrationDate, result.RegistrationDate)
+	result := testRepo.GetPvz(t, pvz.Id)
+	require.Equal(pvz, result)
 }

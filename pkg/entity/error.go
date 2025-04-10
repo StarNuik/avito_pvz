@@ -1,15 +1,18 @@
 package entity
 
-import "fmt"
+import (
+	"fmt"
+)
 
 var (
 	ErrUnauthorized   = fmt.Errorf("not authorized to access this resource")
 	ErrNotFound       = fmt.Errorf("not found")
 	ErrIncorrectLogin = fmt.Errorf("incorrect email or password")
 	ErrAlreadyExists  = fmt.Errorf("resource already exists")
+	ErrInternal       = fmt.Errorf("internal error")
 )
 
-// TODO
-// func InternalError(err error) error {
-
-// }
+// TODO hide inner error
+func InternalError(location string, inner error) error {
+	return fmt.Errorf("%w: %s: %w", ErrInternal, location, inner)
+}

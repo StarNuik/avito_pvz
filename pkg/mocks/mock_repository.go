@@ -45,12 +45,11 @@ func (m *MockRepository) EXPECT() *MockRepositoryMockRecorder {
 }
 
 // CreateProduct mocks base method.
-func (m *MockRepository) CreateProduct(ctx context.Context, product entity.Product) (entity.Product, error) {
+func (m *MockRepository) CreateProduct(ctx context.Context, product entity.Product) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateProduct", ctx, product)
-	ret0, _ := ret[0].(entity.Product)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	ret0, _ := ret[0].(error)
+	return ret0
 }
 
 // CreateProduct indicates an expected call of CreateProduct.
@@ -60,12 +59,11 @@ func (mr *MockRepositoryMockRecorder) CreateProduct(ctx, product any) *gomock.Ca
 }
 
 // CreatePvz mocks base method.
-func (m *MockRepository) CreatePvz(ctx context.Context, pvz entity.Pvz) (entity.Pvz, error) {
+func (m *MockRepository) CreatePvz(ctx context.Context, pvz entity.Pvz) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreatePvz", ctx, pvz)
-	ret0, _ := ret[0].(entity.Pvz)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	ret0, _ := ret[0].(error)
+	return ret0
 }
 
 // CreatePvz indicates an expected call of CreatePvz.
@@ -75,12 +73,11 @@ func (mr *MockRepositoryMockRecorder) CreatePvz(ctx, pvz any) *gomock.Call {
 }
 
 // CreateReception mocks base method.
-func (m *MockRepository) CreateReception(ctx context.Context, reception entity.Reception) (entity.Reception, error) {
+func (m *MockRepository) CreateReception(ctx context.Context, reception entity.Reception) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateReception", ctx, reception)
-	ret0, _ := ret[0].(entity.Reception)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	ret0, _ := ret[0].(error)
+	return ret0
 }
 
 // CreateReception indicates an expected call of CreateReception.
@@ -90,12 +87,11 @@ func (mr *MockRepositoryMockRecorder) CreateReception(ctx, reception any) *gomoc
 }
 
 // CreateUser mocks base method.
-func (m *MockRepository) CreateUser(ctx context.Context, user entity.User) (entity.User, error) {
+func (m *MockRepository) CreateUser(ctx context.Context, user entity.User) error {
 	m.ctrl.T.Helper()
 	ret := m.ctrl.Call(m, "CreateUser", ctx, user)
-	ret0, _ := ret[0].(entity.User)
-	ret1, _ := ret[1].(error)
-	return ret0, ret1
+	ret0, _ := ret[0].(error)
+	return ret0
 }
 
 // CreateUser indicates an expected call of CreateUser.
