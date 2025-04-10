@@ -25,7 +25,7 @@ type Usecase interface {
 	CreateReception(tctx context.Context, token token.Payload, pvzId uuid.UUID) (entity.Reception, error)
 
 	// Read
-	GetPvz(ctx context.Context, token token.Payload, startDate time.Time, endDate time.Time, page *int, limit *int) (entity.PvzInfo, error)
+	GetPvzInfo(ctx context.Context, token token.Payload, startDate time.Time, endDate time.Time, page *int, limit *int) (entity.PvzInfo, error)
 
 	// Update
 	CloseLastReception(ctx context.Context, token token.Payload, pvzId uuid.UUID) (entity.Reception, error)

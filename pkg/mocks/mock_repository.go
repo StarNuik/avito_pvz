@@ -12,6 +12,7 @@ package mocks
 import (
 	context "context"
 	reflect "reflect"
+	time "time"
 
 	uuid "github.com/google/uuid"
 	entity "github.com/starnuik/avito_pvz/pkg/entity"
@@ -145,6 +146,21 @@ func (m *MockRepository) GetOpenReception(ctx context.Context, pvzId uuid.UUID) 
 func (mr *MockRepositoryMockRecorder) GetOpenReception(ctx, pvzId any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
 	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetOpenReception", reflect.TypeOf((*MockRepository)(nil).GetOpenReception), ctx, pvzId)
+}
+
+// GetPvzInfo mocks base method.
+func (m *MockRepository) GetPvzInfo(ctx context.Context, startDate, endDate time.Time, limit, offset int) (entity.PvzInfo, error) {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "GetPvzInfo", ctx, startDate, endDate, limit, offset)
+	ret0, _ := ret[0].(entity.PvzInfo)
+	ret1, _ := ret[1].(error)
+	return ret0, ret1
+}
+
+// GetPvzInfo indicates an expected call of GetPvzInfo.
+func (mr *MockRepositoryMockRecorder) GetPvzInfo(ctx, startDate, endDate, limit, offset any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetPvzInfo", reflect.TypeOf((*MockRepository)(nil).GetPvzInfo), ctx, startDate, endDate, limit, offset)
 }
 
 // GetUser mocks base method.
