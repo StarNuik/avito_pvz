@@ -28,7 +28,10 @@ func Test_CreateReception(t *testing.T) {
 	}
 
 	tx := mocks.NewMockTx(ctrl)
-	tx.EXPECT().Rollback().After(tx.EXPECT().Commit())
+	tx.EXPECT().
+		Rollback(gomock.Any()).
+		After(tx.EXPECT().
+			Commit(gomock.Any()))
 
 	repo := mocks.NewMockRepository(ctrl)
 	repo.EXPECT().
@@ -77,7 +80,7 @@ func Test_CreateReception_AlreadyExists(t *testing.T) {
 	}
 
 	tx := mocks.NewMockTx(ctrl)
-	tx.EXPECT().Rollback()
+	tx.EXPECT().Rollback(gomock.Any())
 
 	repo := mocks.NewMockRepository(ctrl)
 	repo.EXPECT().

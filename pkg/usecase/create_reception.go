@@ -19,7 +19,7 @@ func (u *usecase) CreateReception(ctx context.Context, token token.Payload, pvzI
 	if err != nil {
 		return entity.Reception{}, nil
 	}
-	defer tx.Rollback()
+	defer tx.Rollback(ctx)
 
 	lastReception, err := u.repo.GetLastReception(ctx, pvzId)
 	if err != nil && !errors.Is(err, entity.ErrNotFound) {
@@ -47,5 +47,5 @@ func (u *usecase) CreateReception(ctx context.Context, token token.Payload, pvzI
 		return entity.Reception{}, err
 	}
 
-	return reception, tx.Commit()
+	return reception, tx.Commit(ctx)
 }

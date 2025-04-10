@@ -18,7 +18,7 @@ func (u *usecase) DeleteLastProduct(ctx context.Context, token token.Payload, pv
 	if err != nil {
 		return err
 	}
-	defer tx.Rollback()
+	defer tx.Rollback(ctx)
 
 	reception, err := u.repo.GetLastReception(ctx, pvzId)
 	if err != nil {
@@ -38,5 +38,5 @@ func (u *usecase) DeleteLastProduct(ctx context.Context, token token.Payload, pv
 		return err
 	}
 
-	return tx.Commit()
+	return tx.Commit(ctx)
 }

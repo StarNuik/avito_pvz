@@ -18,7 +18,7 @@ func (u *usecase) CloseLastReception(ctx context.Context, token token.Payload, p
 	if err != nil {
 		return entity.Reception{}, err
 	}
-	defer tx.Rollback()
+	defer tx.Rollback(ctx)
 
 	reception, err := u.repo.GetLastReception(ctx, pvzId)
 	if err != nil {
@@ -34,5 +34,5 @@ func (u *usecase) CloseLastReception(ctx context.Context, token token.Payload, p
 		return entity.Reception{}, err
 	}
 
-	return reception, tx.Commit()
+	return reception, tx.Commit(ctx)
 }

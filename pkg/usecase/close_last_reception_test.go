@@ -30,7 +30,10 @@ func Test_CloseLastReception(t *testing.T) {
 	receptionClosed.Status = entity.StatusClosed
 
 	tx := mocks.NewMockTx(ctrl)
-	tx.EXPECT().Rollback().After(tx.EXPECT().Commit())
+	tx.EXPECT().
+		Rollback(gomock.Any()).
+		After(tx.EXPECT().
+			Commit(gomock.Any()))
 
 	repo := mocks.NewMockRepository(ctrl)
 	repo.EXPECT().

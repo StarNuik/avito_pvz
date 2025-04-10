@@ -18,7 +18,7 @@ func (u *usecase) CreateProduct(ctx context.Context, token token.Payload, pvzId 
 	if err != nil {
 		return entity.Product{}, nil
 	}
-	defer tx.Rollback()
+	defer tx.Rollback(ctx)
 
 	reception, err := u.repo.GetLastReception(ctx, pvzId)
 	if err != nil {
@@ -48,5 +48,5 @@ func (u *usecase) CreateProduct(ctx context.Context, token token.Payload, pvzId 
 		return entity.Product{}, err
 	}
 
-	return product, tx.Commit()
+	return product, tx.Commit(ctx)
 }

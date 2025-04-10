@@ -32,7 +32,10 @@ func Test_CreateProduct(t *testing.T) {
 	}
 
 	tx := mocks.NewMockTx(ctrl)
-	tx.EXPECT().Rollback().After(tx.EXPECT().Commit())
+	tx.EXPECT().
+		Rollback(gomock.Any()).
+		After(tx.EXPECT().
+			Commit(gomock.Any()))
 
 	repo := mocks.NewMockRepository(ctrl)
 	repo.EXPECT().
