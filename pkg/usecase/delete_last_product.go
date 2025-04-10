@@ -20,7 +20,13 @@ func (u *usecase) DeleteLastProduct(ctx context.Context, token token.Payload, pv
 	}
 	defer tx.Rollback()
 
-	product, err := u.repo.GetLastProduct(ctx, pvzId)
+	reception, err := u.repo.GetLastReception(ctx, pvzId)
+	// includes entity.ErrNotFound
+	if err != nil {
+		return err
+	}
+
+	product, err := u.repo.GetLastProduct(ctx, reception.Id)
 	if err != nil {
 		return err
 	}

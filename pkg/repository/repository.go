@@ -25,8 +25,8 @@ type Repository interface {
 
 	// Read
 	GetUser(ctx context.Context, email string) (entity.User, error)
-	GetOpenReception(ctx context.Context, pvzId uuid.UUID) (entity.Reception, error)
-	GetLastProduct(ctx context.Context, pvzId uuid.UUID) (entity.Product, error)
+	GetLastReception(ctx context.Context, pvzId uuid.UUID) (entity.Reception, error)
+	GetLastProduct(ctx context.Context, receptionId uuid.UUID) (entity.Product, error)
 	GetPvzInfo(ctx context.Context, startDate time.Time, endDate time.Time, limit int, offset int) (entity.PvzInfo, error)
 
 	// Update
@@ -62,14 +62,6 @@ type pgImpl struct {
 }
 
 func (repo *pgImpl) GetPvzInfo(ctx context.Context, startDate time.Time, endDate time.Time, limit int, offset int) (entity.PvzInfo, error) {
-	panic("unimplemented")
-}
-
-func (repo *pgImpl) GetLastProduct(ctx context.Context, pvzId uuid.UUID) (entity.Product, error) {
-	panic("unimplemented")
-}
-
-func (repo *pgImpl) GetOpenReception(ctx context.Context, pvzId uuid.UUID) (entity.Reception, error) {
 	panic("unimplemented")
 }
 

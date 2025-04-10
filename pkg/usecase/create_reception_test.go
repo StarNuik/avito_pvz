@@ -35,7 +35,7 @@ func Test_CreateReception(t *testing.T) {
 		LockPvz(gomock.Any(), reception.PvzId, repository.LockNoWrites).
 		Return(tx, nil)
 	repo.EXPECT().
-		GetOpenReception(gomock.Any(), reception.PvzId).
+		GetLastReception(gomock.Any(), reception.PvzId).
 		Return(entity.Reception{}, entity.ErrNotFound)
 	repo.EXPECT().
 		CreateReception(gomock.Any(), reception).
@@ -84,7 +84,7 @@ func Test_CreateReception_AlreadyExists(t *testing.T) {
 		LockPvz(gomock.Any(), reception.PvzId, repository.LockNoWrites).
 		Return(tx, nil)
 	repo.EXPECT().
-		GetOpenReception(gomock.Any(), reception.PvzId).
+		GetLastReception(gomock.Any(), reception.PvzId).
 		Return(reception, nil)
 
 	usecase := usecase.New(repo, nil, nil)

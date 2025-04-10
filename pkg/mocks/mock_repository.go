@@ -115,33 +115,33 @@ func (mr *MockRepositoryMockRecorder) DeleteProduct(ctx, id any) *gomock.Call {
 }
 
 // GetLastProduct mocks base method.
-func (m *MockRepository) GetLastProduct(ctx context.Context, pvzId uuid.UUID) (entity.Product, error) {
+func (m *MockRepository) GetLastProduct(ctx context.Context, receptionId uuid.UUID) (entity.Product, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetLastProduct", ctx, pvzId)
+	ret := m.ctrl.Call(m, "GetLastProduct", ctx, receptionId)
 	ret0, _ := ret[0].(entity.Product)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
 // GetLastProduct indicates an expected call of GetLastProduct.
-func (mr *MockRepositoryMockRecorder) GetLastProduct(ctx, pvzId any) *gomock.Call {
+func (mr *MockRepositoryMockRecorder) GetLastProduct(ctx, receptionId any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLastProduct", reflect.TypeOf((*MockRepository)(nil).GetLastProduct), ctx, pvzId)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLastProduct", reflect.TypeOf((*MockRepository)(nil).GetLastProduct), ctx, receptionId)
 }
 
-// GetOpenReception mocks base method.
-func (m *MockRepository) GetOpenReception(ctx context.Context, pvzId uuid.UUID) (entity.Reception, error) {
+// GetLastReception mocks base method.
+func (m *MockRepository) GetLastReception(ctx context.Context, pvzId uuid.UUID) (entity.Reception, error) {
 	m.ctrl.T.Helper()
-	ret := m.ctrl.Call(m, "GetOpenReception", ctx, pvzId)
+	ret := m.ctrl.Call(m, "GetLastReception", ctx, pvzId)
 	ret0, _ := ret[0].(entity.Reception)
 	ret1, _ := ret[1].(error)
 	return ret0, ret1
 }
 
-// GetOpenReception indicates an expected call of GetOpenReception.
-func (mr *MockRepositoryMockRecorder) GetOpenReception(ctx, pvzId any) *gomock.Call {
+// GetLastReception indicates an expected call of GetLastReception.
+func (mr *MockRepositoryMockRecorder) GetLastReception(ctx, pvzId any) *gomock.Call {
 	mr.mock.ctrl.T.Helper()
-	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetOpenReception", reflect.TypeOf((*MockRepository)(nil).GetOpenReception), ctx, pvzId)
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "GetLastReception", reflect.TypeOf((*MockRepository)(nil).GetLastReception), ctx, pvzId)
 }
 
 // GetPvzInfo mocks base method.

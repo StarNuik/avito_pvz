@@ -20,10 +20,10 @@ func Test_DeleteLastProduct(t *testing.T) {
 	require := require.New(t)
 	ctrl := gomock.NewController(t)
 
-	pvzId := uuid.Max
+	reception := entity.Reception{}
 	product := entity.Product{
 		Id:          uuid.Max,
-		ReceptionId: uuid.Max,
+		ReceptionId: reception.Id,
 		DateTime:    time.Unix(1000, 0),
 		Type:        entity.ProductType(128),
 	}
@@ -33,10 +33,12 @@ func Test_DeleteLastProduct(t *testing.T) {
 
 	repo := mocks.NewMockRepository(ctrl)
 	repo.EXPECT().
-		LockPvz(gomock.Any(), pvzId, repository.LockNoWrites).
+		LockPvz(gomock.Any(), reception.PvzId, repository.LockNoWrites).
 		Return(tx, nil)
+	repo.EXPECT().GetLastReception(gomock.Any(), reception.PvzId).
+		Return(reception, nil)
 	repo.EXPECT().
-		GetLastProduct(gomock.Any(), pvzId).
+		GetLastProduct(gomock.Any(), reception.Id).
 		Return(product, nil)
 	repo.EXPECT().
 		DeleteProduct(gomock.Any(), product.Id).
@@ -50,7 +52,7 @@ func Test_DeleteLastProduct(t *testing.T) {
 	}
 
 	// Act
-	err := usecase.DeleteLastProduct(ctx, token, pvzId)
+	err := usecase.DeleteLastProduct(ctx, token, reception.Id)
 
 	// Assert
 	require.Nil(err)

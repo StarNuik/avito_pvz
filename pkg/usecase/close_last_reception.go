@@ -20,7 +20,7 @@ func (u *usecase) CloseLastReception(ctx context.Context, token token.Payload, p
 	}
 	defer tx.Rollback()
 
-	reception, err := u.repo.GetOpenReception(ctx, pvzId)
+	reception, err := u.repo.GetLastReception(ctx, pvzId)
 	// includes entity.ErrNotFound
 	if err != nil {
 		return entity.Reception{}, err

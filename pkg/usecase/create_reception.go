@@ -21,7 +21,7 @@ func (u *usecase) CreateReception(ctx context.Context, token token.Payload, pvzI
 	}
 	defer tx.Rollback()
 
-	_, err = u.repo.GetOpenReception(ctx, pvzId)
+	_, err = u.repo.GetLastReception(ctx, pvzId)
 	if err == nil {
 		return entity.Reception{}, entity.ErrAlreadyExists
 	}

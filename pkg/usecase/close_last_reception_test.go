@@ -35,7 +35,7 @@ func Test_CloseLastReception(t *testing.T) {
 		LockPvz(gomock.Any(), reception.PvzId, repository.LockNoWrites).
 		Return(tx, nil)
 	repo.EXPECT().
-		GetOpenReception(gomock.Any(), reception.PvzId).
+		GetLastReception(gomock.Any(), reception.PvzId).
 		Return(reception, nil)
 	repo.EXPECT().
 		UpdateReceptionStatus(gomock.Any(), reception.Id, entity.StatusClose).

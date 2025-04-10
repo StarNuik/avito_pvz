@@ -39,7 +39,7 @@ func Test_CreateProduct(t *testing.T) {
 		LockPvz(gomock.Any(), reception.PvzId, repository.LockAllowWrites).
 		Return(tx, nil)
 	repo.EXPECT().
-		GetOpenReception(gomock.Any(), reception.PvzId).
+		GetLastReception(gomock.Any(), reception.PvzId).
 		Return(reception, nil)
 	repo.EXPECT().
 		CreateProduct(gomock.Any(), product).

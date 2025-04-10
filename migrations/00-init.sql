@@ -28,5 +28,6 @@ create table products (
 	receptionId uuid references receptions(id) on delete cascade,
 	type int not null
 );
+create index idxProductsReceptionId on products(receptionId);
 --- todo idx receptionId?
 --- todo idx date?

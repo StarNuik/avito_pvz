@@ -20,7 +20,7 @@ func (u *usecase) CreateProduct(ctx context.Context, token token.Payload, pvzId 
 	}
 	defer tx.Rollback()
 
-	reception, err := u.repo.GetOpenReception(ctx, pvzId)
+	reception, err := u.repo.GetLastReception(ctx, pvzId)
 	if err != nil {
 		return entity.Product{}, err
 	}
