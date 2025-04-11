@@ -10,20 +10,20 @@ type Hasher interface {
 	Hash(pass string) ([]byte, error)
 }
 
-var _ Hasher = (*hasher)(nil)
+var _ Hasher = (*bcryptHasher)(nil)
 
-type hasher struct{}
+type bcryptHasher struct{}
 
 func NewHasher() Hasher {
-	return &hasher{}
+	return &bcryptHasher{}
 }
 
-func (h *hasher) Compare(pass string, hash []byte) bool {
+func (h *bcryptHasher) Compare(pass string, hash []byte) bool {
 	err := bcrypt.CompareHashAndPassword(hash, []byte(pass))
 	return err == nil
 }
 
-func (h *hasher) Hash(pass string) ([]byte, error) {
+func (h *bcryptHasher) Hash(pass string) ([]byte, error) {
 	bytes := []byte(pass)
 	len := min(72, len(bytes))
 	bytes = bytes[:len]

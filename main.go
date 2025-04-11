@@ -1,7 +1,15 @@
 package main
 
-import "fmt"
+import (
+	"log"
+
+	"github.com/starnuik/avito_pvz/pkg/app"
+)
 
 func main() {
-	fmt.Println("Hello")
+	app, err := app.New()
+	if err != nil {
+		log.Fatal(err)
+	}
+	app.Run()
 }
