@@ -26,6 +26,11 @@ func NewTestRepository(t *testing.T) *TestRepository {
 	}
 }
 
+func ClearRepository(t *testing.T) {
+	repo := NewTestRepository(t)
+	repo.Clear(t)
+}
+
 // func (repo *TestRepository) GetUser(t *testing.T, id uuid.UUID) entity.User {
 // 	ctx := context.Background()
 // 	row := repo.conn.QueryRow(ctx, `

@@ -6,18 +6,14 @@ import (
 )
 
 func (h *handler) PostDummyLogin(ctx *gin.Context) {
-	dto := dto.PostDummyLoginJSONRequestBody{}
+	dto := dto.PostDummyLoginJSONBody{}
 	err := ctx.BindJSON(&dto)
 	if err != nil {
 		ctx.AbortWithError(400, err)
 		return
 	}
 
-	userRole, err := dto.ToUserRole()
-	if err != nil {
-		ctx.AbortWithError(400, err)
-		return
-	}
+	userRole, err := dto.Role.ToEntity()
 
 	payload := h.usecase.DummyLogin(userRole)
 

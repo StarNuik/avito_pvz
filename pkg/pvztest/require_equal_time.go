@@ -9,7 +9,5 @@ import (
 
 // RequireEqualTime asserts that the postgres timestamp is within its accuracy limitations (micro-seconds).
 func RequireEqualTime(t *testing.T, local time.Time, postgres time.Time, msgAndArgs ...interface{}) {
-	delta := local.Sub(postgres)
-	require.LessOrEqual(t, delta.Nanoseconds(), int64(1000), msgAndArgs...)
-	require.GreaterOrEqual(t, delta.Nanoseconds(), int64(0), msgAndArgs...)
+	require.InDelta(t, local.Nanosecond(), postgres.Nanosecond(), 1001, msgAndArgs...)
 }

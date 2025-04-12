@@ -13,6 +13,8 @@ import (
 
 // TODO doc
 type Repository interface {
+	Close(context.Context) error
+
 	// Lock
 	LockPvz(ctx context.Context, id uuid.UUID, lock DbLock) (Tx, error)
 
@@ -38,7 +40,8 @@ type Repository interface {
 var _ Repository = (*pgImpl)(nil)
 
 type pgImpl struct {
-	conn *pgx.Conn
+	conn  *pgx.Conn
+	close func(context.Context) error
 }
 
 func New(ctx context.Context, connString string) (*pgImpl, error) {
@@ -48,6 +51,11 @@ func New(ctx context.Context, connString string) (*pgImpl, error) {
 	}
 
 	return &pgImpl{
-		conn: conn,
+		conn:  conn,
+		close: conn.Close,
 	}, nil
+}
+
+func (repo *pgImpl) Close(ctx context.Context) error {
+	return repo.close(ctx)
 }

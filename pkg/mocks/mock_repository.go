@@ -44,6 +44,20 @@ func (m *MockRepository) EXPECT() *MockRepositoryMockRecorder {
 	return m.recorder
 }
 
+// Close mocks base method.
+func (m *MockRepository) Close(arg0 context.Context) error {
+	m.ctrl.T.Helper()
+	ret := m.ctrl.Call(m, "Close", arg0)
+	ret0, _ := ret[0].(error)
+	return ret0
+}
+
+// Close indicates an expected call of Close.
+func (mr *MockRepositoryMockRecorder) Close(arg0 any) *gomock.Call {
+	mr.mock.ctrl.T.Helper()
+	return mr.mock.ctrl.RecordCallWithMethodType(mr.mock, "Close", reflect.TypeOf((*MockRepository)(nil).Close), arg0)
+}
+
 // CreateProduct mocks base method.
 func (m *MockRepository) CreateProduct(ctx context.Context, product entity.Product) error {
 	m.ctrl.T.Helper()

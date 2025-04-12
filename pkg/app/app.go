@@ -2,6 +2,7 @@ package app
 
 import (
 	"context"
+	"net/http"
 
 	"github.com/gin-gonic/gin"
 	"github.com/starnuik/avito_pvz/pkg/gen"
@@ -13,10 +14,14 @@ import (
 )
 
 type App interface {
+	http.Handler
+	Close() error
+
 	Run()
 }
 
 type app struct {
+	close func() error
 	*gin.Engine
 }
 
@@ -38,14 +43,35 @@ func New() (App, error) {
 	router := gin.Default()
 
 	router.GET("/ping", handler.GetPing)
+
+	// Auth
 	router.POST("/dummyLogin", handler.PostDummyLogin)
+	router.POST("/register", handler.PostRegister)
+	router.POST("/login", handler.PostLogin)
+
+	// Create
+	router.POST("/pvz", handler.PostPvz)
+	router.POST("/rececptions", handler.PostReceptions)
+	router.POST("/products", handler.PostProducts)
+
+	// Read
+	router.GET("/pvz", handler.GetPvz)
+
+	// Update / Delete
+	router.POST("/pvz/:id/close_last_reception", handler.PostCloseLastReception)
+	router.POST("/pvz/:id/delete_last_product", handler.PostDeleteLastProduct)
 
 	return &app{
 		Engine: router,
+		close:  func() error { return repo.Close(context.TODO()) },
 	}, nil
 }
 
-func (a *app) Run() {
+func (app *app) Run() {
 	// TODO graceful shutdown
-	a.Engine.Run(":8080")
+	app.Engine.Run(":8080")
+}
+
+func (app *app) Close() error {
+	return app.close()
 }
