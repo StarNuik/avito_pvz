@@ -7,7 +7,8 @@ import (
 )
 
 type Handler interface {
-	Register(*gin.Engine)
+	GetPing(*gin.Context)
+	PostDummyLogin(*gin.Context)
 }
 
 var _ Handler = (*handler)(nil)
@@ -22,8 +23,4 @@ func New(usecase usecase.Usecase, tokenParser token.Parser) Handler {
 		usecase,
 		tokenParser,
 	}
-}
-
-func (h *handler) Register(router *gin.Engine) {
-	router.GET("/ping", h.GetPing)
 }

@@ -8,6 +8,13 @@ components:
   schemas:
     Token:
       type: string
+      
+    UserRole:
+      type: string
+      enum:
+        - employee
+        - moderator
+    
 
     User:
       type: object
@@ -19,8 +26,7 @@ components:
           type: string
           format: email
         role:
-          type: string
-          enum: [employee, moderator]
+            $ref: "#/components/schemas/UserRole"
       required: [email, role]
 
     PVZ:
@@ -96,8 +102,7 @@ paths:
               type: object
               properties:
                 role:
-                  type: string
-                  enum: [employee, moderator]
+                  $ref: "#/components/schemas/UserRole"
               required: [role]
       responses:
         '200':
@@ -129,8 +134,7 @@ paths:
                 password:
                   type: string
                 role:
-                  type: string
-                  enum: [employee, moderator]
+                  $ref: "#/components/schemas/UserRole"
               required: [email, password, role]
       responses:
         '201':

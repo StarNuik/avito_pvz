@@ -37,6 +37,13 @@ type Reception struct {
 	Status   ReceptionStatus
 }
 
+type UserRole int
+
+const (
+	RoleModerator UserRole = iota
+	RoleEmployee
+)
+
 type User struct {
 	Id           uuid.UUID
 	Email        string

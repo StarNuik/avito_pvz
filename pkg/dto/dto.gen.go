@@ -35,14 +35,8 @@ const (
 
 // Defines values for UserRole.
 const (
-	UserRoleEmployee  UserRole = "employee"
-	UserRoleModerator UserRole = "moderator"
-)
-
-// Defines values for PostDummyLoginJSONBodyRole.
-const (
-	PostDummyLoginJSONBodyRoleEmployee  PostDummyLoginJSONBodyRole = "employee"
-	PostDummyLoginJSONBodyRoleModerator PostDummyLoginJSONBodyRole = "moderator"
+	Employee  UserRole = "employee"
+	Moderator UserRole = "moderator"
 )
 
 // Defines values for PostProductsJSONBodyType.
@@ -50,12 +44,6 @@ const (
 	PostProductsJSONBodyTypeОбувь       PostProductsJSONBodyType = "обувь"
 	PostProductsJSONBodyTypeОдежда      PostProductsJSONBodyType = "одежда"
 	PostProductsJSONBodyTypeЭлектроника PostProductsJSONBodyType = "электроника"
-)
-
-// Defines values for PostRegisterJSONBodyRole.
-const (
-	Employee  PostRegisterJSONBodyRole = "employee"
-	Moderator PostRegisterJSONBodyRole = "moderator"
 )
 
 // Error defines model for Error.
@@ -105,16 +93,13 @@ type User struct {
 	Role  UserRole            `json:"role"`
 }
 
-// UserRole defines model for User.Role.
+// UserRole defines model for UserRole.
 type UserRole string
 
 // PostDummyLoginJSONBody defines parameters for PostDummyLogin.
 type PostDummyLoginJSONBody struct {
-	Role PostDummyLoginJSONBodyRole `json:"role"`
+	Role UserRole `json:"role"`
 }
-
-// PostDummyLoginJSONBodyRole defines parameters for PostDummyLogin.
-type PostDummyLoginJSONBodyRole string
 
 // PostLoginJSONBody defines parameters for PostLogin.
 type PostLoginJSONBody struct {
@@ -153,13 +138,10 @@ type PostReceptionsJSONBody struct {
 
 // PostRegisterJSONBody defines parameters for PostRegister.
 type PostRegisterJSONBody struct {
-	Email    openapi_types.Email      `json:"email"`
-	Password string                   `json:"password"`
-	Role     PostRegisterJSONBodyRole `json:"role"`
+	Email    openapi_types.Email `json:"email"`
+	Password string              `json:"password"`
+	Role     UserRole            `json:"role"`
 }
-
-// PostRegisterJSONBodyRole defines parameters for PostRegister.
-type PostRegisterJSONBodyRole string
 
 // PostDummyLoginJSONRequestBody defines body for PostDummyLogin for application/json ContentType.
 type PostDummyLoginJSONRequestBody PostDummyLoginJSONBody

@@ -37,7 +37,8 @@ func New() (App, error) {
 
 	router := gin.Default()
 
-	handler.Register(router)
+	router.GET("/ping", handler.GetPing)
+	router.POST("/dummyLogin", handler.PostDummyLogin)
 
 	return &app{
 		Engine: router,
