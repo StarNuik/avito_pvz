@@ -1,4 +1,4 @@
-package api
+package dto
 
 // TODO other generates SHOULD be like this
 // separate generate.go file

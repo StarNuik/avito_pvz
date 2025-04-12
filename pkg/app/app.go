@@ -4,10 +4,11 @@ import (
 	"context"
 
 	"github.com/gin-gonic/gin"
-	"github.com/starnuik/avito_pvz/pkg/api"
 	"github.com/starnuik/avito_pvz/pkg/gen"
+	"github.com/starnuik/avito_pvz/pkg/handler"
 	"github.com/starnuik/avito_pvz/pkg/password"
 	"github.com/starnuik/avito_pvz/pkg/repository"
+	"github.com/starnuik/avito_pvz/pkg/token"
 	"github.com/starnuik/avito_pvz/pkg/usecase"
 )
 
@@ -31,11 +32,12 @@ func New() (App, error) {
 
 	usecase := usecase.New(repo, hasher, gen)
 
-	handler := api.New(usecase)
+	tokenParser := token.NewParser()
+	handler := handler.New(usecase, tokenParser)
 
 	router := gin.Default()
 
-	api.RegisterHandlers(router, handler)
+	handler.Register(router)
 
 	return &app{
 		Engine: router,

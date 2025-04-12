@@ -10,6 +10,7 @@ var (
 	ErrIncorrectLogin  = fmt.Errorf("incorrect email or password")
 	ErrAlreadyExists   = fmt.Errorf("resource already exists")
 	ErrReceptionClosed = fmt.Errorf("resource is already closed")
+	ErrCantParse       = fmt.Errorf("cant parse")
 	ErrInternal        = fmt.Errorf("internal error")
 )
 

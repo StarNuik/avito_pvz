@@ -1,0 +1,5 @@
+# yaml-language-server: $schema=../../../../configuration-schema.json
+package: dto
+output: dto.gen.go
+generate:
+  models: true
