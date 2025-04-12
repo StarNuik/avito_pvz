@@ -48,11 +48,6 @@ func (h *handler) PostDeleteLastProduct(*gin.Context) {
 	panic("unimplemented")
 }
 
-// PostLogin implements Handler.
-func (h *handler) PostLogin(*gin.Context) {
-	panic("unimplemented")
-}
-
 // PostProducts implements Handler.
 func (h *handler) PostProducts(*gin.Context) {
 	panic("unimplemented")

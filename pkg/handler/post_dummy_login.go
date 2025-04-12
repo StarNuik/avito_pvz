@@ -14,6 +14,9 @@ func (h *handler) PostDummyLogin(ctx *gin.Context) {
 	}
 
 	userRole, err := dto.Role.ToEntity()
+	if err != nil {
+		ctx.AbortWithError(400, err)
+	}
 
 	payload := h.usecase.DummyLogin(userRole)
 

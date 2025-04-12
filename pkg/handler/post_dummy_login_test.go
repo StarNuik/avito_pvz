@@ -1,6 +1,7 @@
 package handler_test
 
 import (
+	"encoding/json"
 	"net/http"
 	"net/http/httptest"
 	"strings"
@@ -25,7 +26,11 @@ func Test_PostDummyLogin_Ok(t *testing.T) {
 
 	// Assert
 	require.Equal(w.Code, 200)
-	require.NotEmpty(w.Body.String())
+
+	var result string
+	err := json.Unmarshal(w.Body.Bytes(), &result)
+	require.Nil(err)
+	require.NotEmpty(result)
 }
 
 func Test_PostDummyLogin_BadJson_BadRequest(t *testing.T) {
