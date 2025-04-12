@@ -8,7 +8,6 @@ import (
 	"github.com/starnuik/avito_pvz/pkg/entity"
 )
 
-// PostLogin implements Handler.
 func (h *handler) PostLogin(ctx *gin.Context) {
 	req := dto.PostLoginJSONBody{}
 	err := ctx.BindJSON(&req)

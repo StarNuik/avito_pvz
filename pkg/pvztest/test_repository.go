@@ -155,3 +155,18 @@ func (repo *TestRepository) GetReception(t *testing.T, receptionId uuid.UUID) en
 
 	return reception
 }
+
+func (repo *TestRepository) CountPvzs(t *testing.T) int {
+	ctx := context.Background()
+	row := repo.conn.QueryRow(ctx, `
+		select count(id)
+		from pvzs`)
+
+	var count int
+	err := row.Scan(&count)
+	if err != nil {
+		t.Fatal(err)
+	}
+
+	return count
+}

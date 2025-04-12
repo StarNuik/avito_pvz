@@ -2,6 +2,7 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
+	"github.com/starnuik/avito_pvz/pkg/middleware"
 	"github.com/starnuik/avito_pvz/pkg/token"
 	"github.com/starnuik/avito_pvz/pkg/usecase"
 )
@@ -33,32 +34,28 @@ func New(usecase usecase.Usecase, tokenParser token.Parser) Handler {
 	}
 }
 
-// GetPvz implements Handler.
 func (h *handler) GetPvz(*gin.Context) {
 	panic("unimplemented")
 }
 
-// PostCloseLastReception implements Handler.
 func (h *handler) PostCloseLastReception(*gin.Context) {
 	panic("unimplemented")
 }
 
-// PostDeleteLastProduct implements Handler.
 func (h *handler) PostDeleteLastProduct(*gin.Context) {
 	panic("unimplemented")
 }
 
-// PostProducts implements Handler.
 func (h *handler) PostProducts(*gin.Context) {
 	panic("unimplemented")
 }
 
-// PostPvz implements Handler.
-func (h *handler) PostPvz(*gin.Context) {
+func (h *handler) PostReceptions(*gin.Context) {
 	panic("unimplemented")
 }
 
-// PostReceptions implements Handler.
-func (h *handler) PostReceptions(*gin.Context) {
-	panic("unimplemented")
+func GetTokenPayload(ctx *gin.Context) (token.Payload, bool) {
+	untyped, ok1 := ctx.Get(middleware.PayloadKey)
+	payload, ok2 := untyped.(token.Payload)
+	return payload, ok1 && ok2
 }

@@ -5,7 +5,6 @@ import (
 	"github.com/starnuik/avito_pvz/pkg/dto"
 )
 
-// PostRegister implements Handler.
 func (h *handler) PostRegister(ctx *gin.Context) {
 	req := dto.PostRegisterJSONBody{}
 	err := ctx.BindJSON(&req)
