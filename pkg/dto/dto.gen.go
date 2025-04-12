@@ -13,18 +13,18 @@ const (
 	BearerAuthScopes = "bearerAuth.Scopes"
 )
 
-// Defines values for PVZCity.
-const (
-	Казань         PVZCity = "Казань"
-	Москва         PVZCity = "Москва"
-	СанктПетербург PVZCity = "Санкт-Петербург"
-)
-
 // Defines values for ProductType.
 const (
-	ProductTypeОбувь       ProductType = "обувь"
-	ProductTypeОдежда      ProductType = "одежда"
-	ProductTypeЭлектроника ProductType = "электроника"
+	Обувь       ProductType = "обувь"
+	Одежда      ProductType = "одежда"
+	Электроника ProductType = "электроника"
+)
+
+// Defines values for PvzCity.
+const (
+	Казань         PvzCity = "Казань"
+	Москва         PvzCity = "Москва"
+	СанктПетербург PvzCity = "Санкт-Петербург"
 )
 
 // Defines values for ReceptionStatus.
@@ -39,13 +39,6 @@ const (
 	Moderator UserRole = "moderator"
 )
 
-// Defines values for PostProductsJSONBodyType.
-const (
-	PostProductsJSONBodyTypeОбувь       PostProductsJSONBodyType = "обувь"
-	PostProductsJSONBodyTypeОдежда      PostProductsJSONBodyType = "одежда"
-	PostProductsJSONBodyTypeЭлектроника PostProductsJSONBodyType = "электроника"
-)
-
 // Error defines model for Error.
 type Error struct {
 	Message string `json:"message"`
@@ -53,13 +46,10 @@ type Error struct {
 
 // PVZ defines model for PVZ.
 type PVZ struct {
-	City             PVZCity             `json:"city"`
+	City             PvzCity             `json:"city"`
 	Id               *openapi_types.UUID `json:"id,omitempty"`
 	RegistrationDate *time.Time          `json:"registrationDate,omitempty"`
 }
-
-// PVZCity defines model for PVZ.City.
-type PVZCity string
 
 // Product defines model for Product.
 type Product struct {
@@ -69,8 +59,11 @@ type Product struct {
 	Type        ProductType         `json:"type"`
 }
 
-// ProductType defines model for Product.Type.
+// ProductType defines model for ProductType.
 type ProductType string
+
+// PvzCity defines model for PvzCity.
+type PvzCity string
 
 // Reception defines model for Reception.
 type Reception struct {
@@ -109,12 +102,9 @@ type PostLoginJSONBody struct {
 
 // PostProductsJSONBody defines parameters for PostProducts.
 type PostProductsJSONBody struct {
-	PvzId openapi_types.UUID       `json:"pvzId"`
-	Type  PostProductsJSONBodyType `json:"type"`
+	PvzId openapi_types.UUID `json:"pvzId"`
+	Type  ProductType        `json:"type"`
 }
-
-// PostProductsJSONBodyType defines parameters for PostProducts.
-type PostProductsJSONBodyType string
 
 // GetPvzParams defines parameters for GetPvz.
 type GetPvzParams struct {
