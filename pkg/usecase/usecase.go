@@ -20,18 +20,18 @@ type Usecase interface {
 	DummyLogin(userRole entity.UserRole) token.Payload
 
 	// Create
-	CreatePvz(ctx context.Context, token token.Payload, city entity.PvzCity, id *uuid.UUID, registrationDate *time.Time) (entity.Pvz, error)
-	CreateProduct(ctx context.Context, token token.Payload, pvzId uuid.UUID, productType entity.ProductType) (entity.Product, error)
-	CreateReception(tctx context.Context, token token.Payload, pvzId uuid.UUID) (entity.Reception, error)
+	CreatePvz(ctx context.Context, city entity.PvzCity, id *uuid.UUID, registrationDate *time.Time) (entity.Pvz, error)
+	CreateProduct(ctx context.Context, pvzId uuid.UUID, productType entity.ProductType) (entity.Product, error)
+	CreateReception(tctx context.Context, pvzId uuid.UUID) (entity.Reception, error)
 
 	// Read
-	GetPvzInfo(ctx context.Context, token token.Payload, startDate time.Time, endDate time.Time, page *int, limit *int) (entity.PvzInfo, error)
+	GetPvzInfo(ctx context.Context, startDate time.Time, endDate time.Time, page *int, limit *int) (entity.PvzInfo, error)
 
 	// Update
-	CloseLastReception(ctx context.Context, token token.Payload, pvzId uuid.UUID) (entity.Reception, error)
+	CloseLastReception(ctx context.Context, pvzId uuid.UUID) (entity.Reception, error)
 
 	// Delete
-	DeleteLastProduct(ctx context.Context, token token.Payload, pvzId uuid.UUID) error
+	DeleteLastProduct(ctx context.Context, pvzId uuid.UUID) error
 }
 
 var _ Usecase = (*usecase)(nil)

@@ -6,14 +6,9 @@ import (
 	"github.com/google/uuid"
 	"github.com/starnuik/avito_pvz/pkg/entity"
 	"github.com/starnuik/avito_pvz/pkg/repository"
-	"github.com/starnuik/avito_pvz/pkg/token"
 )
 
-func (u *usecase) DeleteLastProduct(ctx context.Context, token token.Payload, pvzId uuid.UUID) error {
-	if token.UserRole != entity.RoleEmployee {
-		return entity.ErrUnauthorized
-	}
-
+func (u *usecase) DeleteLastProduct(ctx context.Context, pvzId uuid.UUID) error {
 	tx, err := u.repo.LockPvz(ctx, pvzId, repository.LockNoWrites)
 	if err != nil {
 		return err

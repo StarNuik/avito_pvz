@@ -9,7 +9,6 @@ import (
 	"github.com/starnuik/avito_pvz/pkg/entity"
 	"github.com/starnuik/avito_pvz/pkg/mocks"
 	"github.com/starnuik/avito_pvz/pkg/repository"
-	"github.com/starnuik/avito_pvz/pkg/token"
 	"github.com/starnuik/avito_pvz/pkg/usecase"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
@@ -50,12 +49,9 @@ func Test_DeleteLastProduct(t *testing.T) {
 	usecase := usecase.New(repo, nil, nil)
 
 	ctx := context.Background()
-	token := token.Payload{
-		UserRole: entity.RoleEmployee,
-	}
 
 	// Act
-	err := usecase.DeleteLastProduct(ctx, token, reception.Id)
+	err := usecase.DeleteLastProduct(ctx, reception.Id)
 
 	// Assert
 	require.Nil(err)

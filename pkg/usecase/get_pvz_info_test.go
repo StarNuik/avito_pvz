@@ -7,7 +7,6 @@ import (
 
 	"github.com/starnuik/avito_pvz/pkg/entity"
 	"github.com/starnuik/avito_pvz/pkg/mocks"
-	"github.com/starnuik/avito_pvz/pkg/token"
 	"github.com/starnuik/avito_pvz/pkg/usecase"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
@@ -33,12 +32,9 @@ func Test_GetPvzInfo_AllOptions(t *testing.T) {
 	usecase := usecase.New(repo, nil, nil)
 
 	ctx := context.Background()
-	token := token.Payload{
-		UserRole: entity.RoleEmployee,
-	}
 
 	// Act
-	result, err := usecase.GetPvzInfo(ctx, token, startDate, endDate, &page, &limit)
+	result, err := usecase.GetPvzInfo(ctx, startDate, endDate, &page, &limit)
 
 	// Assert
 	require.Nil(err)
@@ -64,12 +60,9 @@ func Test_GetPvzInfo_NoOptions(t *testing.T) {
 	usecase := usecase.New(repo, nil, nil)
 
 	ctx := context.Background()
-	token := token.Payload{
-		UserRole: entity.RoleEmployee,
-	}
 
 	// Act
-	result, err := usecase.GetPvzInfo(ctx, token, startDate, endDate, nil, nil)
+	result, err := usecase.GetPvzInfo(ctx, startDate, endDate, nil, nil)
 
 	// Assert
 	require.Nil(err)

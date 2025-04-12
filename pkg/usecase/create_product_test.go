@@ -9,7 +9,6 @@ import (
 	"github.com/starnuik/avito_pvz/pkg/entity"
 	"github.com/starnuik/avito_pvz/pkg/mocks"
 	"github.com/starnuik/avito_pvz/pkg/repository"
-	"github.com/starnuik/avito_pvz/pkg/token"
 	"github.com/starnuik/avito_pvz/pkg/usecase"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
@@ -59,12 +58,9 @@ func Test_CreateProduct(t *testing.T) {
 	usecase := usecase.New(repo, nil, gen)
 
 	ctx := context.Background()
-	token := token.Payload{
-		UserRole: entity.RoleEmployee,
-	}
 
 	// Act
-	result, err := usecase.CreateProduct(ctx, token, reception.PvzId, product.Type)
+	result, err := usecase.CreateProduct(ctx, reception.PvzId, product.Type)
 
 	// Assert
 	require.Nil(err)

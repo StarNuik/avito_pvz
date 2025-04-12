@@ -2,7 +2,6 @@ package handler
 
 import (
 	"github.com/gin-gonic/gin"
-	"github.com/starnuik/avito_pvz/pkg/middleware"
 	"github.com/starnuik/avito_pvz/pkg/token"
 	"github.com/starnuik/avito_pvz/pkg/usecase"
 )
@@ -52,10 +51,4 @@ func (h *handler) PostProducts(*gin.Context) {
 
 func (h *handler) PostReceptions(*gin.Context) {
 	panic("unimplemented")
-}
-
-func GetTokenPayload(ctx *gin.Context) (token.Payload, bool) {
-	untyped, ok1 := ctx.Get(middleware.PayloadKey)
-	payload, ok2 := untyped.(token.Payload)
-	return payload, ok1 && ok2
 }

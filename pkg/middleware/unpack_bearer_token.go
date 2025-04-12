@@ -15,14 +15,14 @@ var (
 
 const (
 	AuthHeader string = "Authorization"
-	PayloadKey string = "token-payload"
+	payloadKey string = "token-payload"
 )
 
-func AuthCheck(tokenParser token.Parser) gin.HandlerFunc {
+func UnpackBearerToken(tokenParser token.Parser) gin.HandlerFunc {
 	return func(ctx *gin.Context) {
 		tokenHeader := ctx.GetHeader(AuthHeader)
-		token, ok := strings.CutPrefix(tokenHeader, "Bearer ")
-		if !ok {
+		token, found := strings.CutPrefix(tokenHeader, "Bearer ")
+		if !found {
 			ctx.AbortWithError(403, ErrAuthHeader)
 			return
 		}
@@ -33,7 +33,7 @@ func AuthCheck(tokenParser token.Parser) gin.HandlerFunc {
 			return
 		}
 
-		ctx.Set(PayloadKey, payload)
+		ctx.Set(payloadKey, payload)
 
 		ctx.Next()
 	}

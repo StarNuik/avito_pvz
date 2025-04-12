@@ -6,14 +6,9 @@ import (
 	"github.com/google/uuid"
 	"github.com/starnuik/avito_pvz/pkg/entity"
 	"github.com/starnuik/avito_pvz/pkg/repository"
-	"github.com/starnuik/avito_pvz/pkg/token"
 )
 
-func (u *usecase) CreateProduct(ctx context.Context, token token.Payload, pvzId uuid.UUID, productType entity.ProductType) (entity.Product, error) {
-	if token.UserRole != entity.RoleEmployee {
-		return entity.Product{}, entity.ErrUnauthorized
-	}
-
+func (u *usecase) CreateProduct(ctx context.Context, pvzId uuid.UUID, productType entity.ProductType) (entity.Product, error) {
 	tx, err := u.repo.LockPvz(ctx, pvzId, repository.LockAllowWrites)
 	if err != nil {
 		return entity.Product{}, nil

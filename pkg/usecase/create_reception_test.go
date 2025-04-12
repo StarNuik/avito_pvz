@@ -9,7 +9,6 @@ import (
 	"github.com/starnuik/avito_pvz/pkg/entity"
 	"github.com/starnuik/avito_pvz/pkg/mocks"
 	"github.com/starnuik/avito_pvz/pkg/repository"
-	"github.com/starnuik/avito_pvz/pkg/token"
 	"github.com/starnuik/avito_pvz/pkg/usecase"
 	"github.com/stretchr/testify/require"
 	"go.uber.org/mock/gomock"
@@ -55,12 +54,9 @@ func Test_CreateReception(t *testing.T) {
 	usecase := usecase.New(repo, nil, gen)
 
 	ctx := context.Background()
-	token := token.Payload{
-		UserRole: entity.RoleEmployee,
-	}
 
 	// Act
-	result, err := usecase.CreateReception(ctx, token, reception.PvzId)
+	result, err := usecase.CreateReception(ctx, reception.PvzId)
 
 	// Assert
 	require.Nil(err)
@@ -93,31 +89,10 @@ func Test_CreateReception_AlreadyExists(t *testing.T) {
 	usecase := usecase.New(repo, nil, nil)
 
 	ctx := context.Background()
-	token := token.Payload{
-		UserRole: entity.RoleEmployee,
-	}
 
 	// Act
-	_, err := usecase.CreateReception(ctx, token, reception.PvzId)
+	_, err := usecase.CreateReception(ctx, reception.PvzId)
 
 	// Assert
 	require.ErrorIs(err, entity.ErrAlreadyExists)
-}
-
-func Test_CreateReception_Unauthorized(t *testing.T) {
-	// Arrange
-	require := require.New(t)
-
-	usecase := usecase.New(nil, nil, nil)
-
-	ctx := context.Background()
-	token := token.Payload{
-		UserRole: entity.RoleModerator,
-	}
-
-	// Act
-	_, err := usecase.CreateReception(ctx, token, uuid.Nil)
-
-	// Assert
-	require.ErrorIs(err, entity.ErrUnauthorized)
 }

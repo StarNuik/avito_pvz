@@ -5,6 +5,7 @@ import (
 	"net/http"
 
 	"github.com/gin-gonic/gin"
+	"github.com/starnuik/avito_pvz/pkg/entity"
 	"github.com/starnuik/avito_pvz/pkg/gen"
 	"github.com/starnuik/avito_pvz/pkg/handler"
 	"github.com/starnuik/avito_pvz/pkg/middleware"
@@ -50,19 +51,17 @@ func New() (App, error) {
 	router.POST("/register", handler.PostRegister)
 	router.POST("/login", handler.PostLogin)
 
-	authGroup := router.Group("", middleware.AuthCheck(tokenParser))
-
-	// Create
-	authGroup.POST("/pvz", handler.PostPvz)
-	authGroup.POST("/rececptions", handler.PostReceptions)
-	authGroup.POST("/products", handler.PostProducts)
-
-	// Read
+	authGroup := router.Group("", middleware.UnpackBearerToken(tokenParser))
 	authGroup.GET("/pvz", handler.GetPvz)
 
-	// Update / Delete
-	authGroup.POST("/pvz/:id/close_last_reception", handler.PostCloseLastReception)
-	authGroup.POST("/pvz/:id/delete_last_product", handler.PostDeleteLastProduct)
+	moderatorsGroup := authGroup.Group("", middleware.RequireUserRole(entity.RoleModerator))
+	moderatorsGroup.POST("/pvz", handler.PostPvz)
+
+	employeeGroup := authGroup.Group("", middleware.RequireUserRole(entity.RoleEmployee))
+	employeeGroup.POST("/receptions", handler.PostReceptions)
+	employeeGroup.POST("/products", handler.PostProducts)
+	employeeGroup.POST("/pvz/:id/close_last_reception", handler.PostCloseLastReception)
+	employeeGroup.POST("/pvz/:id/delete_last_product", handler.PostDeleteLastProduct)
 
 	return &app{
 		Engine: router,
