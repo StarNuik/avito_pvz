@@ -18,16 +18,6 @@ const (
 )
 
 func (repo *pgImpl) LockPvz(ctx context.Context, pvzId uuid.UUID, lock DbLock) (Tx, error) {
-	/*
-		TODO remove me
-
-		# usecases
-		create reception VS create reception
-		create product VS close reception
-		create product VS delete product
-		delete product VS delete product
-	*/
-
 	tx, err := repo.conn.Begin(ctx)
 	if err != nil {
 		return nil, entity.InternalError("LockPvz", err)
