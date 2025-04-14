@@ -27,6 +27,12 @@ const (
 	StatusClosed
 )
 
+const (
+	TypeFootwear ProductType = iota
+	TypeClothing
+	TypeElectronics
+)
+
 type Product struct {
 	Id          uuid.UUID
 	DateTime    time.Time

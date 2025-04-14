@@ -33,10 +33,6 @@ func New(usecase usecase.Usecase, tokenParser token.Parser) Handler {
 	}
 }
 
-func (h *handler) GetPvz(*gin.Context) {
-	panic("unimplemented")
-}
-
 func (h *handler) PostCloseLastReception(*gin.Context) {
 	panic("unimplemented")
 }

@@ -51,6 +51,18 @@ type PVZ struct {
 	RegistrationDate *time.Time          `json:"registrationDate,omitempty"`
 }
 
+// PVZListPVZ defines model for PVZListPVZ.
+type PVZListPVZ struct {
+	Pvz        PVZ                `json:"pvz"`
+	Receptions []PVZListReception `json:"receptions"`
+}
+
+// PVZListReception defines model for PVZListReception.
+type PVZListReception struct {
+	Products  []Product `json:"products"`
+	Reception Reception `json:"reception"`
+}
+
 // Product defines model for Product.
 type Product struct {
 	DateTime    *time.Time          `json:"dateTime,omitempty"`

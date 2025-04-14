@@ -94,6 +94,28 @@ components:
         message:
           type: string
       required: [message]
+      
+    PVZListPVZ:
+        type: object
+        required: [pvz, receptions]
+        properties:
+          pvz:
+            $ref: '#/components/schemas/PVZ'
+          receptions:
+            type: array
+            items:
+              $ref: '#/components/schemas/PVZListReception'
+    PVZListReception:
+      type: object
+      required: [reception, products]
+      properties:
+        reception:
+          $ref: '#/components/schemas/Reception'
+        products:
+          type: array
+          items:
+            $ref: '#/components/schemas/Product'
+        
 
   securitySchemes:
     bearerAuth:
@@ -266,21 +288,7 @@ paths:
               schema:
                 type: array
                 items:
-                  type: object
-                  properties:
-                    pvz:
-                      $ref: '#/components/schemas/PVZ'
-                    receptions:
-                      type: array
-                      items:
-                        type: object
-                        properties:
-                          reception:
-                            $ref: '#/components/schemas/Reception'
-                          products:
-                            type: array
-                            items:
-                              $ref: '#/components/schemas/Product'
+                  $ref: '#/components/schemas/PVZListPVZ'
 
   /pvz/{pvzId}/close_last_reception:
     post:

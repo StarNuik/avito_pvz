@@ -1,14 +1,13 @@
 package handler_test
 
 import (
-	"bytes"
-	"encoding/json"
+	"fmt"
 	"net/http"
 	"net/http/httptest"
+	"net/url"
 	"testing"
+	"time"
 
-	"github.com/google/uuid"
-	"github.com/starnuik/avito_pvz/pkg/dto"
 	"github.com/starnuik/avito_pvz/pkg/entity"
 	"github.com/starnuik/avito_pvz/pkg/middleware"
 	"github.com/starnuik/avito_pvz/pkg/pvztest"
@@ -16,12 +15,12 @@ import (
 	"github.com/stretchr/testify/require"
 )
 
-func Test_PostPvz_NoToken_Forbidden(t *testing.T) {
+func Test_GetPvz_NoToken_Forbidden(t *testing.T) {
 	// Arrange
 	require := require.New(t)
 
 	w := httptest.NewRecorder()
-	req, _ := http.NewRequest("POST", "/pvz", nil)
+	req, _ := http.NewRequest("GET", "/pvz", nil)
 
 	app := pvztest.NewApp(t)
 
@@ -32,16 +31,16 @@ func Test_PostPvz_NoToken_Forbidden(t *testing.T) {
 	require.Equal(403, w.Code)
 }
 
-func Test_PostPvz_IncorrectRole_Forbidden(t *testing.T) {
+func Test_GetPvz_IncorrectRole_Forbidden(t *testing.T) {
 	// Arrange
 	require := require.New(t)
 
 	tokenParser := token.NewParser()
 	token, _ := tokenParser.Pack(token.Payload{
-		UserRole: entity.RoleEmployee,
+		UserRole: entity.UserRole(-1),
 	})
 
-	req, _ := http.NewRequest("POST", "/pvz", nil)
+	req, _ := http.NewRequest("GET", "/pvz", nil)
 	req.Header.Add(middleware.AuthHeader, "Bearer "+token)
 
 	w := httptest.NewRecorder()
@@ -54,7 +53,7 @@ func Test_PostPvz_IncorrectRole_Forbidden(t *testing.T) {
 	require.Equal(403, w.Code)
 }
 
-func Test_PostPvz_Ok(t *testing.T) {
+func Test_GetPvz_Ok(t *testing.T) {
 	// Arrange
 	require := require.New(t)
 
@@ -63,15 +62,15 @@ func Test_PostPvz_Ok(t *testing.T) {
 
 	tokenParser := token.NewParser()
 	token, _ := tokenParser.Pack(token.Payload{
-		UserRole: entity.RoleModerator,
+		UserRole: entity.RoleEmployee,
 	})
 
-	reqDto := dto.PVZ{
-		Id:   &uuid.Max,
-		City: dto.Казань,
-	}
-	reqBody, _ := json.Marshal(reqDto)
-	req, _ := http.NewRequest("POST", "/pvz", bytes.NewReader(reqBody))
+	startDate := time.Unix(0, 0)
+	endDate := time.Unix(1, 0)
+	startStr := url.QueryEscape(startDate.Format(time.RFC3339))
+	endStr := url.QueryEscape(endDate.Format(time.RFC3339))
+	query := fmt.Sprintf("/pvz?startDate=%s&endDate=%s", startStr, endStr)
+	req, _ := http.NewRequest("GET", query, nil)
 	req.Header.Add(middleware.AuthHeader, "Bearer "+token)
 
 	w := httptest.NewRecorder()
@@ -81,7 +80,6 @@ func Test_PostPvz_Ok(t *testing.T) {
 	app.ServeHTTP(w, req)
 
 	// Assert
-	require.Equal(201, w.Code)
-
-	require.Equal(1, testRepo.CountPvzs(t))
+	require.Equal(200, w.Code)
+	require.Equal("[]", w.Body.String())
 }
